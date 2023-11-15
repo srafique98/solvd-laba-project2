@@ -67,4 +67,13 @@ public class Service implements Chargeable {
     }
 
 
+    @Override
+    public String toString() {
+        return "Service{" +
+                "name='" + name + '\'' +
+                ", parts=" + parts +
+                ", cost=" + cost +
+                ", serviceStatus='" + serviceStatus + '\'' +
+                '}';
+    }
 }

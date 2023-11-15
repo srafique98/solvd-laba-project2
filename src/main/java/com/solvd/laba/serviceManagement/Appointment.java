@@ -72,4 +72,13 @@ public class Appointment implements Scheduleable {
         this.time = null;
         this.status = "Cancelled";
     }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "date=" + date +
+                ", time=" + time +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

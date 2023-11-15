@@ -79,4 +79,15 @@ public class Part implements Repairable {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Part{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", price=" + price +
+                ", condition='" + condition + '\'' +
+                '}';
+    }
 }

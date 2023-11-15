@@ -1,13 +1,14 @@
 package com.solvd.laba.serviceManagement;
 
 import com.solvd.laba.interfaces.Repairable;
+import com.solvd.laba.people.Customer;
 import com.solvd.laba.people.Person;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class Vehicle implements Repairable {
-    private Person owner;
+    private Customer owner;
     private LocalDate modelYear;
     private String model;
     private String make;
@@ -15,14 +16,14 @@ public class Vehicle implements Repairable {
     private  List<Part> damagedParts;
     private boolean isDamaged;
 
-    public Vehicle(LocalDate modelYear, String model, String make, Person owner) {
+    public Vehicle(LocalDate modelYear, String model, String make, Customer owner) {
         this.modelYear = modelYear;
         this.model = model;
         this.make = make;
         this.owner = owner;
     }
 
-    public Vehicle(LocalDate modelYear, String model, String make, LocalDate manufactureDate, boolean isDamaged, Person owner) {
+    public Vehicle(LocalDate modelYear, String model, String make, LocalDate manufactureDate, boolean isDamaged, Customer owner) {
         this.modelYear = modelYear;
         this.model = model;
         this.make = make;
@@ -32,7 +33,7 @@ public class Vehicle implements Repairable {
     }
 
     public Person getOwner() { return owner; }
-    public void setOwner(Person owner) { this.owner = owner; }
+    public void setOwner(Customer owner) { this.owner = owner; }
     public LocalDate getModelYear() {
         return modelYear;
     }

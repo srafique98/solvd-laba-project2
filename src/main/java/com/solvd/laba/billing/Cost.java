@@ -110,4 +110,15 @@ public class Cost implements Chargeable {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Cost{" +
+                "laborCost=" + laborCost +
+                ", partsCost=" + partsCost +
+                ", serviceFee=" + serviceFee +
+                ", totalCost=" + totalCost +
+                ", currencyType='" + currencyType + '\'' +
+                '}';
+    }
 }

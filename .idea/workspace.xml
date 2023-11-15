@@ -4,22 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="adce617a-43ca-4711-bb48-4c5b7f3d4e17" name="Changes" comment="Created new class, interfaces and exceptions">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/exceptions/InvalidCostException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/exceptions/InvalidDiscountException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/people/Employee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/serviceManagement/Part.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/serviceManagement/Service.java" afterDir="false" />
+    <list default="true" id="adce617a-43ca-4711-bb48-4c5b7f3d4e17" name="Changes" comment="Rest of classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/CarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/CarService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/Cost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/billing/Cost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/interfaces/Chargeable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/interfaces/Chargeable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/location/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/location/Location.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/people/customers/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/people/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/people/customers/Service.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/people/customers/ServiceHistory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/people/employees/Employee.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/billing/Cost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/billing/Cost.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/serviceManagement/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/serviceManagement/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/serviceManagement/Part.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/serviceManagement/Part.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/serviceManagement/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/serviceManagement/Service.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/solvd/laba/serviceManagement/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solvd/laba/serviceManagement/Vehicle.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -99,7 +90,8 @@
       <option name="presentableId" value="Default" />
       <updated>1699992597742</updated>
       <workItem from="1699992598741" duration="9027000" />
-      <workItem from="1700011854416" duration="23908000" />
+      <workItem from="1700011854416" duration="24742000" />
+      <workItem from="1700061627315" duration="3146000" />
     </task>
     <task id="LOCAL-00001" summary="Testing">
       <option name="closed" value="true" />
@@ -125,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700035223461</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Rest of classes">
+      <option name="closed" value="true" />
+      <created>1700044247074</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1700044247074</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,6 +135,7 @@
     <MESSAGE value="Testing" />
     <MESSAGE value="Inital Commit" />
     <MESSAGE value="Created new class, interfaces and exceptions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created new class, interfaces and exceptions" />
+    <MESSAGE value="Rest of classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rest of classes" />
   </component>
 </project>
