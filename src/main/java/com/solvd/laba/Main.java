@@ -58,7 +58,9 @@ public class Main {
         Service service2 = new Service("Oil Change", parts2, new Cost(30.00, "USD"), "Completed");
         services.add(service2);
 
+        Map<String, Customer> customers = new HashMap<>();
         Customer customer1 = new Customer("John", "Doe", vehicles, phoneNumbers, appointments, services);
+        customers.put("000001", customer1);
 
         System.out.println(vehicle1);
         System.out.println(vehicle2);
@@ -71,5 +73,27 @@ public class Main {
         System.out.println(service2);
 
         System.out.println(customer1);
+
+        List<Location> locations = new ArrayList<>();
+        Location location1 = new Location("Sunnyvale", "CA", "123 Main St.");
+        location1.setEstablishedDate(LocalDate.of(2015, 1, 1));
+        location1.rate(4.5);
+        locations.add(location1);
+
+        Location location2 = new Location("San Francisco", "CA", "456 Mission St.");
+        location2.setEstablishedDate(LocalDate.of(2010, 1, 1));
+        location2.rate(4.8);
+        locations.add(location2);
+
+        List<Employee> employees = new ArrayList<>();
+        Employee employee1 = new Employee("Alice", "Jones", new Location("Sunnyvale", "CA", "123 Main St."), "Mechanic", 50000.00);
+        employees.add(employee1);
+
+        Employee employee2 = new Employee("Bob", "Williams", new Location("San Francisco", "CA", "456 Mission St."), "Technician", 40000.00);
+        employees.add(employee2);
+
+        CarService carService = new CarService(customers, employees, services, locations);
+        System.out.println(carService);
+
     }
 }
