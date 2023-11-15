@@ -1,10 +1,22 @@
-package com.solvd.laba;
+package com.solvd.laba.billing;
 
-public class Cost {
+import com.solvd.laba.exceptions.InvalidCostException;
+import com.solvd.laba.exceptions.InvalidDiscountException;
+import com.solvd.laba.interfaces.Chargeable;
+
+public class Cost implements Chargeable {
+    public final static double TAX_RATE = 0.03; // 3% tax
     private double laborCost;
     private double partsCost;
     private double serviceFee;
     private double totalCost;
+    private String currencyType;
+
+
+    public Cost(double totalCost, String currencyType) {
+        this.totalCost = totalCost;
+        this.currencyType = currencyType;
+    }
 
     public Cost(double laborCost, double partsCost, double serviceFee) {
         this.laborCost = laborCost;
@@ -57,20 +69,10 @@ public class Cost {
         this.totalCost = laborCost + partsCost + serviceFee;
     }
 
-    // Final variable
-    public final static double TAX_RATE = 0.07; // 7% sales tax
-
-    // Final method
     public final double calculateTotalCostWithTax() {
         return totalCost + (totalCost * TAX_RATE);
     }
 
-    // Static block
-    static {
-        System.out.println("Loading Cost class...");
-    }
-
-    // Static method
     public static void printCostBreakdown(Cost cost) {
         System.out.println("Cost Breakdown:");
         System.out.println("Labor Cost: $" + cost.getLaborCost());
@@ -85,15 +87,27 @@ public class Cost {
             throw new InvalidCostException("Cost cannot be negative");
         }
     }
-    //chargable can calculuate total charge and discount method as well!
 
-    // Exception handling using try-with-resources block
-    public void calculateCostWithDiscount(Discountable discountable) throws InvalidDiscountException {
-        try (Discountable discountableResource = discountable) { // Automatically closes the discountable object
-            double discountedCost = totalCost * (1 - discountableResource.getDiscountRate());
-            this.totalCost = discountedCost;
-        } catch (Exception e) {
-            throw new InvalidDiscountException("Invalid discount");
+    public void calculateCostWithDiscount(double discountRate) throws InvalidDiscountException {
+        if (discountRate < 0 || discountRate > 1) {
+            throw new InvalidDiscountException("Invalid discount rate: " + discountRate);
+        }
+
+        double discountedCost = totalCost * (1 - discountRate);
+        this.totalCost = discountedCost;
+    }
+
+    @Override
+    public double totalCharge() {
+        return getTotalCost();
+    }
+
+    @Override
+    public void applyDiscount(double discountPercentage) {
+        try {
+            calculateCostWithDiscount(discountPercentage);
+        } catch (InvalidDiscountException e) {
+            throw new RuntimeException(e);
         }
     }
 }

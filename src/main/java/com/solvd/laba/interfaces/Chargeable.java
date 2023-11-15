@@ -1,6 +1,6 @@
 package com.solvd.laba.interfaces;
 
 public interface Chargeable {
-    double calculateCharge();
+    double totalCharge();
     void applyDiscount(double discountPercentage);
 }

@@ -1,4 +1,120 @@
 package com.solvd.laba.serviceManagement;
 
-public class Vehicle {
+import com.solvd.laba.interfaces.Repairable;
+import com.solvd.laba.people.Person;
+
+import java.time.LocalDate;
+import java.util.List;
+
+public class Vehicle implements Repairable {
+    private Person owner;
+    private LocalDate modelYear;
+    private String model;
+    private String make;
+    private LocalDate manufactureDate;
+    private  List<Part> damagedParts;
+    private boolean isDamaged;
+
+    public Vehicle(LocalDate modelYear, String model, String make, Person owner) {
+        this.modelYear = modelYear;
+        this.model = model;
+        this.make = make;
+        this.owner = owner;
+    }
+
+    public Vehicle(LocalDate modelYear, String model, String make, LocalDate manufactureDate, boolean isDamaged, Person owner) {
+        this.modelYear = modelYear;
+        this.model = model;
+        this.make = make;
+        this.manufactureDate = manufactureDate;
+        this.isDamaged = isDamaged;
+        this.owner = owner;
+    }
+
+    public Person getOwner() { return owner; }
+    public void setOwner(Person owner) { this.owner = owner; }
+    public LocalDate getModelYear() {
+        return modelYear;
+    }
+    public void setModelYear(LocalDate modelYear) {
+        this.modelYear = modelYear;
+    }
+    public String getModel() {
+        return model;
+    }
+    public void setModel(String model) {
+        this.model = model;
+    }
+    public String getMake() {
+        return make;
+    }
+    public void setMake(String make) {
+        this.make = make;
+    }
+    public LocalDate getManufactureDate() {
+        return manufactureDate;
+    }
+    public void setManufactureDate(LocalDate manufactureDate) {
+        this.manufactureDate = manufactureDate;
+    }
+
+    public boolean isOlderThan(int years) {
+        LocalDate currentDate = LocalDate.now();
+        return currentDate.getYear() - manufactureDate.getYear() > years;
+    }
+    public int getAge() {
+        LocalDate currentDate = LocalDate.now();
+        return currentDate.getYear() - manufactureDate.getYear();
+    }
+    public List<Part> getDamagedParts() {
+        return damagedParts;
+    }
+    public void setDamagedParts(List<Part> damagedParts) {
+        this.damagedParts = damagedParts;
+        if (!damagedParts.isEmpty()) {
+            this.isDamaged = true;
+        }
+    }
+    public void addDamagedPart(Part damagedPart) {
+        this.damagedParts.add(damagedPart);
+        this.isDamaged = true;
+    }
+    public void removeDamagedPart(Part damagedPart) {
+        this.damagedParts.remove(damagedPart);
+        if (damagedParts.isEmpty()) {
+            this.isDamaged = false;
+        }
+    }
+    @Override
+    public void repair() {
+        if (isDamaged()) {
+            System.out.println("Repairing the following damaged parts:");
+            for (Part damagedPart : damagedParts) {
+                damagedPart.repair();
+            }
+            damagedParts.clear();
+            this.isDamaged = false;
+            System.out.println("Vehicle repair completed.");
+        } else {
+            System.out.println("Vehicle is not damaged and does not require repair.");
+        }
+    }
+
+    @Override
+    public boolean isDamaged() {
+        return this.isDamaged;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "owner=" + owner +
+                ", modelYear=" + modelYear +
+                ", model='" + model + '\'' +
+                ", make='" + make + '\'' +
+                ", manufactureDate=" + manufactureDate +
+                ", damagedParts=" + damagedParts +
+                ", isDamaged=" + isDamaged +
+                '}';
+    }
 }

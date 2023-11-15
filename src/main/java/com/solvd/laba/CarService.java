@@ -1,9 +1,9 @@
 package com.solvd.laba;
 
 import com.solvd.laba.location.Location;
-import com.solvd.laba.people.customers.Customer;
-import com.solvd.laba.people.customers.Service;
-import com.solvd.laba.people.employees.Employee;
+import com.solvd.laba.people.Customer;
+import com.solvd.laba.serviceManagement.Service;
+import com.solvd.laba.people.Employee;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,7 +1,7 @@
-package com.solvd.laba.people.customers;
+package com.solvd.laba.people;
 
+import com.solvd.laba.serviceManagement.Service;
 import com.solvd.laba.serviceManagement.Appointment;
-import com.solvd.laba.people.Person;
 import com.solvd.laba.serviceManagement.Vehicle;
 import com.solvd.laba.exceptions.AppointmentConflictException;
 import com.solvd.laba.exceptions.InvalidAppointmentException;
@@ -15,28 +15,26 @@ import java.util.*;
 
 public class Customer extends Person implements Displayable, Scheduleable {
 
-    private Map<String, Vehicle> vehicles; // Assuming a map of car registration number to Car objects
+    private Map<String, Vehicle> vehicles; // registration number to Car objects
     private HashSet<String> phoneNumbers; // unique phone number only!
     private List<Appointment> appointments;
-    private List<Service> serviceHistory; // replacing invoice
+    private  LinkedList<Service>  services;
 
     public Customer(String firstName, String lastName, HashSet<String> phoneNumbers) {
         super(firstName, lastName);
         this.phoneNumbers = phoneNumbers;
         this.vehicles = new HashMap<>();
-        this.serviceHistory = new ArrayList<>();
+        this.services = new LinkedList<>();
         this.phoneNumbers = new HashSet<>();
     }
 
-    public Customer(String firstName, String lastName, Map<String, Vehicle> vehicles, HashSet<String> phoneNumbers, List<Appointment> appointments, List<Service> serviceHistory) {
+    public Customer(String firstName, String lastName, Map<String, Vehicle> vehicles, HashSet<String> phoneNumbers, List<Appointment> appointments, LinkedList<Service> services) {
         super(firstName, lastName);
         this.vehicles = vehicles;
         this.phoneNumbers = phoneNumbers;
         this.appointments = appointments;
-        this.serviceHistory = serviceHistory;
+        this.services = services;
     }
-
-
 
     @Override
     public String getFullName() {
@@ -72,28 +70,23 @@ public class Customer extends Person implements Displayable, Scheduleable {
         this.appointments = appointments;
     }
 
-    public List<Service> getServiceHistory() {
-        return serviceHistory;
+    public List<Service> getservices() {
+        return services;
     }
 
-    public void setServiceHistory(List<Service> serviceHistory) {
-        this.serviceHistory = serviceHistory;
+    public void setservices(LinkedList<Service> services) {
+        this.services = services;
     }
 
     @Override
     public void scheduleAppointment(LocalDate userDate, LocalTime userTime) {
         try {
-            // Check if the date and time are valid
             if (!isValidDateAndTime(userDate, userTime)) {
                 throw new InvalidAppointmentException("Invalid date or time format");
             }
-
-            // Check if the customer has a conflict with the appointment
             if (hasAppointmentConflict(userDate, userTime)) {
                 throw new AppointmentConflictException("Customer already has an appointment at that time");
             }
-
-            // Create a new appointment object and add it to the customer's list of appointments
             Appointment newAppointment = new Appointment(userDate, userTime);
             appointments.add(newAppointment);
 
@@ -117,16 +110,12 @@ public class Customer extends Person implements Displayable, Scheduleable {
         }
         return false;
     }
-
-
     @Override
     public void cancelAppointment() {
         try {
-            // Check if the customer has any appointments
             if (appointments.isEmpty()) {
                 throw new NoAppointmentException("Customer has no appointments to cancel");
             }
-
             Appointment mostRecentAppointment = appointments.get(appointments.size() - 1);
             appointments.remove(mostRecentAppointment);
             System.out.println("Appointment canceled successfully");
