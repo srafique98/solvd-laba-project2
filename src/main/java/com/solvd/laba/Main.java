@@ -74,7 +74,7 @@ public class Main {
 
         System.out.println(customer1);
 
-        List<Location> locations = new ArrayList<>();
+        ArrayList<Location> locations = new ArrayList<>();
         Location location1 = new Location("Sunnyvale", "CA", "123 Main St.");
         location1.setEstablishedDate(LocalDate.of(2015, 1, 1));
         location1.rate(4.5);
@@ -85,7 +85,7 @@ public class Main {
         location2.rate(4.8);
         locations.add(location2);
 
-        List<Employee> employees = new ArrayList<>();
+        ArrayList<Employee> employees = new ArrayList<>();
         Employee employee1 = new Employee("Alice", "Jones", new Location("Sunnyvale", "CA", "123 Main St."), "Mechanic", 50000.00);
         employees.add(employee1);
 

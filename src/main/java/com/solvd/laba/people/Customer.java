@@ -74,8 +74,8 @@ public class Customer extends Person implements Displayable, Scheduleable {
         return services;
     }
 
-    public void setservices(LinkedList<Service> services) {
-        this.services = services;
+    public void setservices(LinkedList<Service> service) {
+        this.services = service;
     }
 
     @Override
@@ -125,5 +125,18 @@ public class Customer extends Person implements Displayable, Scheduleable {
         }
 
     }
+
+    public void getVehicleInformation(String registrationNumber) {
+        if (vehicles.containsKey(registrationNumber)) {
+            Vehicle vehicle = vehicles.get(registrationNumber);
+            System.out.println("Vehicle Information for Registration Number " + registrationNumber + ":");
+            System.out.println("Make: " + vehicle.getMake());
+            System.out.println("Model: " + vehicle.getModel());
+            System.out.println("Year: " + vehicle.getModelYear());
+        } else {
+            System.out.println("Vehicle with registration number " + registrationNumber + " not found.");
+        }
+    }
+
 
 }

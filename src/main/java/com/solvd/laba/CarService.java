@@ -4,6 +4,7 @@ import com.solvd.laba.location.Location;
 import com.solvd.laba.people.Customer;
 import com.solvd.laba.serviceManagement.Service;
 import com.solvd.laba.people.Employee;
+import com.solvd.laba.serviceManagement.Vehicle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +16,7 @@ import java.util.Map;
 public class CarService {
 
     private static final Logger LOGGER = LogManager.getLogger(CarService.class);
-    private Map<String, Customer> customers; //A map of customers to their information.
+    private Map<String, Customer> customers; //A map of customers email/ID to their information.
     private List<Employee> employees;
     private List<Service> services;
     private List<Location> locations;
@@ -79,5 +80,39 @@ public class CarService {
                 ", services=" + services +
                 ", locations=" + locations +
                 '}';
+    }
+
+    public Customer findCustomerWithMostServicesRequested() {
+        Map<Customer, Integer> serviceCounts = new HashMap<>();
+        for (Customer customer : this.customers.values()) {
+            int customerServiceCount = 0;
+            for (Service service : customer.getservices()) {
+                customerServiceCount++;
+            }
+            serviceCounts.put(customer, customerServiceCount);
+        }
+        Map.Entry<Customer, Integer> maxEntry = null;
+        for (Map.Entry<Customer, Integer> entry : serviceCounts.entrySet()) {
+            if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
+                maxEntry = entry;
+            }
+        }
+        if (maxEntry != null) {
+            Customer maxCustomer = maxEntry.getKey();
+            int maxCount = maxEntry.getValue();
+            return maxCustomer;
+        }
+        return null;
+    }
+
+    public List<Vehicle> getCustomerVehicles(String customerId) {
+        List<Vehicle> customerVehicles = new ArrayList<>();
+        if (customers.containsKey(customerId)) {
+            Customer customer = customers.get(customerId);
+            Map<String, Vehicle> vehicles = customer.getVehicles();
+            customerVehicles.addAll(vehicles.values());
+        }
+
+        return customerVehicles;
     }
 }
