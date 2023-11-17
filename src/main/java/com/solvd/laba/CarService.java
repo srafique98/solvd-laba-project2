@@ -27,12 +27,6 @@ public class CarService {
         this.locations = locations;
         this.employees = new ArrayList<>();
         this.customers = new HashMap<>();
-    }
-    public CarService(Map<String, Customer> customers, List<Employee> employees, List<Service> services, List<Location> locations) {
-        this.customers = customers;
-        this.employees = employees;
-        this.services = services;
-        this.locations = locations;
         LOGGER.info("Card Service has been created! Card Service Info: " + toString());
     }
 

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Vehicle implements Repairable {
@@ -25,15 +26,7 @@ public class Vehicle implements Repairable {
         this.model = model;
         this.make = make;
         this.owner = owner;
-    }
-
-    public Vehicle(LocalDate modelYear, String model, String make, LocalDate manufactureDate, boolean isDamaged, Customer owner) {
-        this.modelYear = modelYear;
-        this.model = model;
-        this.make = make;
-        this.manufactureDate = manufactureDate;
-        this.isDamaged = isDamaged;
-        this.owner = owner;
+        this.damagedParts = new ArrayList<>();
     }
 
     public Person getOwner() { return owner; }

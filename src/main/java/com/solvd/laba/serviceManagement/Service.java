@@ -22,13 +22,6 @@ public class Service implements Chargeable {
         this.parts = new ArrayList<>();
     }
 
-    public Service(String name, List<Part> parts, Cost cost, String serviceStatus) {
-        this.name = name;
-        this.parts = parts;
-        this.cost = cost;
-        this.serviceStatus = serviceStatus;
-    }
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public List<Part> getParts() { return parts; }

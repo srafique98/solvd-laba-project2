@@ -21,23 +21,11 @@ public class Location implements Ratable, Displayable {
     static { // this is Static block
         locationCount = 0; }
 
-    public Location(String city, String country) {
-        this.city = city;
-        this.country = country;
-    }
 
     public Location(String city, String country, String branchName) {
         this.city = city;
         this.country = country;
         this.branchName = branchName;
-        locationCount++;
-    }
-    public Location(String city, String country, String branchName, LocalDate establishedDate, double ratings) {
-        this.city = city;
-        this.country = country;
-        this.branchName = branchName;
-        this.establishedDate = establishedDate;
-        this.ratings = ratings;
         locationCount++;
     }
 
