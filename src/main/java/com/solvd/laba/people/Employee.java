@@ -1,12 +1,16 @@
 package com.solvd.laba.people;
 
+import com.solvd.laba.exceptions.InvalidRatingException;
 import com.solvd.laba.interfaces.Displayable;
 import com.solvd.laba.interfaces.Ratable;
 import com.solvd.laba.location.Location;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
 public class Employee extends Person implements Displayable, Ratable {
+    private static final Logger LOGGER = LogManager.getLogger(Employee.class);
     private Location location;
     private String jobTittle;
     private double salary;
@@ -60,6 +64,10 @@ public class Employee extends Person implements Displayable, Ratable {
 
     @Override
     public void rate(double newRating) {
+        if (newRating < 0 || newRating > 5) {
+            LOGGER.error("Invalid rating: " + newRating);
+            throw new InvalidRatingException("Invalid rating: " + newRating);
+        }
         System.out.println("Rating the employee with a new rating of " + newRating);
         this.ratings = newRating;
     }

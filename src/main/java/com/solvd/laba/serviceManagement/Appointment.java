@@ -1,11 +1,15 @@
 package com.solvd.laba.serviceManagement;
 
 import com.solvd.laba.interfaces.Scheduleable;
+import com.solvd.laba.people.Employee;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Appointment implements Scheduleable {
+    private static final Logger LOGGER = LogManager.getLogger(Appointment.class);
     private LocalDate date;
     private LocalTime time;
     private String status;
@@ -13,6 +17,7 @@ public class Appointment implements Scheduleable {
     public Appointment(LocalDate date, LocalTime time) {
         this.date = date;
         this.time = time;
+        this.status = "Scheduled";
     }
 
     public Appointment(LocalDate date, LocalTime time, String status) {
@@ -47,6 +52,7 @@ public class Appointment implements Scheduleable {
 
     public void schAppointment(LocalDate userDate, LocalTime userTime) throws IllegalArgumentException {
         if (userDate.isBefore(LocalDate.now())) {
+            LOGGER.error("Appointment date cannot be in the past");
             throw new IllegalArgumentException("Appointment date cannot be in the past");
         }
         this.date = userDate;
@@ -63,9 +69,11 @@ public class Appointment implements Scheduleable {
     @Override
     public void cancelAppointment() throws IllegalStateException {
         if (this.date.isEqual(LocalDate.now()) || this.time.isBefore(LocalTime.now())) {
+            LOGGER.error("Appointment has already started");
             throw new IllegalStateException("Appointment has already started");
         }
         if (this.status.equals("Completed")) {
+            LOGGER.error("Appointment has already been completed");
             throw new IllegalStateException("Appointment has already been completed");
         }
         this.date = null;

@@ -1,13 +1,17 @@
 package com.solvd.laba.serviceManagement;
 
+import com.solvd.laba.CarService;
 import com.solvd.laba.interfaces.Repairable;
 import com.solvd.laba.people.Customer;
 import com.solvd.laba.people.Person;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class Vehicle implements Repairable {
+    private static final Logger LOGGER = LogManager.getLogger(Vehicle.class);
     private Customer owner;
     private LocalDate modelYear;
     private String model;

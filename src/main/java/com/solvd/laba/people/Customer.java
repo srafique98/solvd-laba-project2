@@ -1,5 +1,6 @@
 package com.solvd.laba.people;
 
+import com.solvd.laba.location.Location;
 import com.solvd.laba.serviceManagement.Service;
 import com.solvd.laba.serviceManagement.Appointment;
 import com.solvd.laba.serviceManagement.Vehicle;
@@ -8,41 +9,37 @@ import com.solvd.laba.exceptions.InvalidAppointmentException;
 import com.solvd.laba.exceptions.NoAppointmentException;
 import com.solvd.laba.interfaces.Displayable;
 import com.solvd.laba.interfaces.Scheduleable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
 public class Customer extends Person implements Displayable, Scheduleable {
-
-    private Map<String, Vehicle> vehicles; // registration number to Car objects
+    private static final Logger LOGGER = LogManager.getLogger(Customer.class);
     private HashSet<String> phoneNumbers; // unique phone number only!
     private List<Appointment> appointments;
-    private  LinkedList<Service>  services;
+    private  List<Service> services;
+    private Map<String, Vehicle> vehicles; // registration number to Car objects
 
     public Customer(String firstName, String lastName, HashSet<String> phoneNumbers) {
         super(firstName, lastName);
         this.phoneNumbers = phoneNumbers;
         this.vehicles = new HashMap<>();
         this.services = new LinkedList<>();
-        this.phoneNumbers = new HashSet<>();
-    }
-
-    public Customer(String firstName, String lastName, Map<String, Vehicle> vehicles, HashSet<String> phoneNumbers, List<Appointment> appointments, LinkedList<Service> services) {
-        super(firstName, lastName);
-        this.vehicles = vehicles;
-        this.phoneNumbers = phoneNumbers;
-        this.appointments = appointments;
-        this.services = services;
+        this.appointments = new ArrayList<>();
     }
 
     @Override
     public String getFullName() {
+        LOGGER.info(firstName + " " + lastName);
         return firstName + " " + lastName;
     }
 
     @Override
     public String getInfo() {
+        LOGGER.info("Customer Details: " + this.toString());
         return "Customer Details: " + this.toString();
     }
 
@@ -82,9 +79,11 @@ public class Customer extends Person implements Displayable, Scheduleable {
     public void scheduleAppointment(LocalDate userDate, LocalTime userTime) {
         try {
             if (!isValidDateAndTime(userDate, userTime)) {
+                LOGGER.error("Invalid date or time format");
                 throw new InvalidAppointmentException("Invalid date or time format");
             }
             if (hasAppointmentConflict(userDate, userTime)) {
+                LOGGER.error("Customer already has an appointment at that time");
                 throw new AppointmentConflictException("Customer already has an appointment at that time");
             }
             Appointment newAppointment = new Appointment(userDate, userTime);
@@ -92,6 +91,7 @@ public class Customer extends Person implements Displayable, Scheduleable {
 
             System.out.println("Appointment scheduled successfully for " + userDate + " at " + userTime);
         } catch (InvalidAppointmentException | AppointmentConflictException e) {
+            LOGGER.error(e.getMessage());
             System.out.println(e.getMessage());
         }
     }
@@ -114,6 +114,7 @@ public class Customer extends Person implements Displayable, Scheduleable {
     public void cancelAppointment() {
         try {
             if (appointments.isEmpty()) {
+                LOGGER.error("Customer has no appointments to cancel");
                 throw new NoAppointmentException("Customer has no appointments to cancel");
             }
             Appointment mostRecentAppointment = appointments.get(appointments.size() - 1);
@@ -121,6 +122,7 @@ public class Customer extends Person implements Displayable, Scheduleable {
             System.out.println("Appointment canceled successfully");
 
         } catch (NoAppointmentException e) {
+            LOGGER.error(e.getMessage());
             System.out.println(e.getMessage());
         }
 

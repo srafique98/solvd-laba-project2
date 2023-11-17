@@ -17,10 +17,8 @@
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <SizeBasedTriggeringPolicy size="1MB"/>
             </Policies>
-            <!-- Max 10 files will be created everyday -->
             <DefaultRolloverStrategy max="10">
                 <Delete basePath="logs" maxDepth="10">
-                    <!-- Delete all files older than 3 days -->
                     <IfLastModified age="3d"/>
                 </Delete>
             </DefaultRolloverStrategy>
@@ -29,13 +27,11 @@
     </Appenders>
 
     <Loggers>
-        <!--   <Logger name="org.apache.test" level="trace" additivity="false">
-               <AppenderRef ref="Out"/>
-           </Logger> -->
         <Root level="info">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="fileLogger"/>
         </Root>
+<!--        1 root only!-->
 <!--        <Root level="error">-->
 <!--            <AppenderRef ref="Console"/>-->
 <!--            <AppenderRef ref="fileLogger"/>-->

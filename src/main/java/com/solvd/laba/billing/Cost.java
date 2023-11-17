@@ -3,9 +3,15 @@ package com.solvd.laba.billing;
 import com.solvd.laba.exceptions.InvalidCostException;
 import com.solvd.laba.exceptions.InvalidDiscountException;
 import com.solvd.laba.interfaces.Chargeable;
+import com.solvd.laba.serviceManagement.Vehicle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Objects;
 
 public class Cost implements Chargeable {
     public final static double TAX_RATE = 0.03; // 3% tax
+    private static final Logger LOGGER = LogManager.getLogger(Cost.class);
     private double laborCost;
     private double partsCost;
     private double serviceFee;
@@ -24,6 +30,9 @@ public class Cost implements Chargeable {
         this.serviceFee = serviceFee;
         calculateTotalCost();
     }
+    static {
+        LOGGER.info("Cost class has been created.");
+    }
 
     public double getLaborCost() {
         return laborCost;
@@ -31,6 +40,7 @@ public class Cost implements Chargeable {
 
     public void setLaborCost(double laborCost) {
         if (laborCost < 0) {
+            LOGGER.error("Labor cost cannot be negative");
             throw new IllegalArgumentException("Labor cost cannot be negative");
         }
         this.laborCost = laborCost;
@@ -43,6 +53,7 @@ public class Cost implements Chargeable {
 
     public void setPartsCost(double partsCost) {
         if (partsCost < 0) {
+            LOGGER.error("Parts cost cannot be negative");
             throw new IllegalArgumentException("Parts cost cannot be negative");
         }
         this.partsCost = partsCost;
@@ -55,6 +66,7 @@ public class Cost implements Chargeable {
 
     public void setServiceFee(double serviceFee) {
         if (serviceFee < 0) {
+            LOGGER.error("Service fee cannot be negative");
             throw new IllegalArgumentException("Service fee cannot be negative");
         }
         this.serviceFee = serviceFee;
@@ -81,15 +93,16 @@ public class Cost implements Chargeable {
         System.out.println("Total Cost: $" + cost.getTotalCost());
     }
 
-    // Exception handling using try-catch block
     public void validateCost() throws InvalidCostException {
         if (laborCost < 0 || partsCost < 0 || serviceFee < 0) {
+            LOGGER.error("Cost cannot be negative");
             throw new InvalidCostException("Cost cannot be negative");
         }
     }
 
     public void calculateCostWithDiscount(double discountRate) throws InvalidDiscountException {
         if (discountRate < 0 || discountRate > 1) {
+            LOGGER.error("Invalid discount rate: " + discountRate);
             throw new InvalidDiscountException("Invalid discount rate: " + discountRate);
         }
 
@@ -107,6 +120,7 @@ public class Cost implements Chargeable {
         try {
             calculateCostWithDiscount(discountPercentage);
         } catch (InvalidDiscountException e) {
+            LOGGER.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -120,5 +134,18 @@ public class Cost implements Chargeable {
                 ", totalCost=" + totalCost +
                 ", currencyType='" + currencyType + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cost cost = (Cost) o;
+        return Double.compare(getLaborCost(), cost.getLaborCost()) == 0 && Double.compare(getPartsCost(), cost.getPartsCost()) == 0 && Double.compare(getServiceFee(), cost.getServiceFee()) == 0 && Double.compare(getTotalCost(), cost.getTotalCost()) == 0 && Objects.equals(currencyType, cost.currencyType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLaborCost(), getPartsCost(), getServiceFee(), getTotalCost(), currencyType);
     }
 }

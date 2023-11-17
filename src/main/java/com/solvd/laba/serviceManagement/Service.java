@@ -2,19 +2,24 @@ package com.solvd.laba.serviceManagement;
 
 import com.solvd.laba.interfaces.Chargeable;
 import com.solvd.laba.billing.Cost;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Service implements Chargeable {
+    private static final Logger LOGGER = LogManager.getLogger(Part.class);
     private String name;
     private List<Part> parts;
     private Cost cost;
     private String serviceStatus; // scheduled, completed, canceled
     private static int totalServicesPerformed = 0;
 
-    public Service(String name, Cost cost) {
+    public Service(String name) {
         this.name = name;
-        this.cost = cost;
+        this.serviceStatus = "scheduled";
+        this.parts = new ArrayList<>();
     }
 
     public Service(String name, List<Part> parts, Cost cost, String serviceStatus) {

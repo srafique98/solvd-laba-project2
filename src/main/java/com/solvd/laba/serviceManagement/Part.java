@@ -1,8 +1,11 @@
 package com.solvd.laba.serviceManagement;
 
 import com.solvd.laba.interfaces.Repairable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Part implements Repairable {
+    private static final Logger LOGGER = LogManager.getLogger(Part.class);
     private String name;
     private String description;
     private String manufacturer;
@@ -66,9 +69,9 @@ public class Part implements Repairable {
     public void repair() {
         if (isDamaged()) {
             this.condition = "Good";
-            System.out.println(this.name + " has been repaired and is now in good condition.");
+            LOGGER.info(this.name + " has been repaired and is now in good condition.");
         } else {
-            System.out.println(this.name + " is not damaged and does not require repair.");
+            LOGGER.info(this.name + " is not damaged and does not require repair.");
         }
     }
 
