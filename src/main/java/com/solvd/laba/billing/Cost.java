@@ -31,7 +31,7 @@ public class Cost implements Chargeable {
         calculateTotalCost();
     }
     static {
-        LOGGER.info("Cost class has been created.");
+        LOGGER.warn("Cost class has been created.");
     }
 
     public double getLaborCost() {
