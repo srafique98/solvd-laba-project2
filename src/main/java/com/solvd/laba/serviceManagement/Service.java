@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Service implements Chargeable {
-    private static final Logger LOGGER = LogManager.getLogger(Part.class);
+    private static final Logger LOGGER = LogManager.getLogger(Service.class);
     private String name;
     private List<Part> parts;
     private Cost cost;
-    private String serviceStatus; // scheduled, completed, canceled
+    private String serviceStatus; // enum: scheduled, completed, canceled
     private static int totalServicesPerformed = 0;
 
     public Service(String name) {
@@ -41,12 +41,12 @@ public class Service implements Chargeable {
         if (this.serviceStatus.equals("Scheduled")) {
             this.serviceStatus = "Completed";
         } else {
-            System.out.println("Service cannot be completed as it is not scheduled.");
+            LOGGER.warn("Service cannot be completed as it is not scheduled.");
         }
     }
 
     public static void printTotalServicesPerformed() {
-        System.out.println("Total Services Performed: " + totalServicesPerformed);
+        LOGGER.info("Total Services Performed: " + totalServicesPerformed);
     }
 
     @Override

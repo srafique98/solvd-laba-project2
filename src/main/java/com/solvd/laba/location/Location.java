@@ -3,19 +3,20 @@ package com.solvd.laba.location;
 import com.solvd.laba.billing.Cost;
 import com.solvd.laba.exceptions.InvalidRatingException;
 import com.solvd.laba.interfaces.Displayable;
+import com.solvd.laba.interfaces.DisplayableName;
 import com.solvd.laba.interfaces.Ratable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 
-public class Location implements Ratable, Displayable {
+public class Location implements Ratable, Displayable, DisplayableName {
     private static final Logger LOGGER = LogManager.getLogger(Location.class);
     private String city;
     private String country;
     private String branchName;
     private LocalDate establishedDate;
-    private double ratings;
+    private double rating;
     private static int locationCount;
 
     static { // this is Static block
@@ -75,7 +76,7 @@ public class Location implements Ratable, Displayable {
     }
     @Override
     public double getRating() {
-        return this.ratings;
+        return this.rating;
     }
     @Override
     public void rate(double newRating) {
@@ -83,7 +84,7 @@ public class Location implements Ratable, Displayable {
             throw new InvalidRatingException("Invalid rating: " + newRating);
         }
         System.out.println("Rating the location with a new rating of " + newRating);
-        this.ratings = newRating;
+        this.rating = newRating;
     }
 
     @Override
@@ -111,7 +112,7 @@ public class Location implements Ratable, Displayable {
                 ", country='" + country + '\'' +
                 ", branchName='" + branchName + '\'' +
                 ", establishedDate=" + establishedDate +
-                ", ratings=" + ratings +
+                ", ratings=" + rating +
                 '}';
     }
 }

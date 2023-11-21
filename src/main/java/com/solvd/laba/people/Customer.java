@@ -1,5 +1,6 @@
 package com.solvd.laba.people;
 
+import com.solvd.laba.interfaces.DisplayableName;
 import com.solvd.laba.location.Location;
 import com.solvd.laba.serviceManagement.Service;
 import com.solvd.laba.serviceManagement.Appointment;
@@ -16,14 +17,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Customer extends Person implements Displayable, Scheduleable {
+public class Customer extends Person implements Displayable, Scheduleable, DisplayableName {
     private static final Logger LOGGER = LogManager.getLogger(Customer.class);
-    private HashSet<String> phoneNumbers; // unique phone number only!
+    private Set<String> phoneNumbers; // unique phone number only! use SET interface able to extend application easier
     private List<Appointment> appointments;
     private  List<Service> services;
     private Map<String, Vehicle> vehicles; // registration number to Car objects
 
-    public Customer(String firstName, String lastName, HashSet<String> phoneNumbers) {
+    public Customer(String firstName, String lastName, Set<String> phoneNumbers) {
         super(firstName, lastName);
         this.phoneNumbers = phoneNumbers;
         this.vehicles = new HashMap<>();
@@ -51,13 +52,10 @@ public class Customer extends Person implements Displayable, Scheduleable {
         this.vehicles = vehicles;
     }
 
-    public HashSet<String> getPhoneNumbers() {
-        return phoneNumbers;
-    }
 
-    public void setPhoneNumbers(HashSet<String> phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;
-    }
+    public Set<String> getPhoneNumbers() { return phoneNumbers; }
+
+    public void setPhoneNumbers(Set<String> phoneNumbers) { this.phoneNumbers = phoneNumbers; }
 
     public List<Appointment> getAppointments() {
         return appointments;
@@ -128,15 +126,17 @@ public class Customer extends Person implements Displayable, Scheduleable {
 
     }
 
-    public void getVehicleInformation(String registrationNumber) {
+    public Vehicle getVehicleInformation(String registrationNumber) { //get --> expects to return something
         if (vehicles.containsKey(registrationNumber)) {
             Vehicle vehicle = vehicles.get(registrationNumber);
-            System.out.println("Vehicle Information for Registration Number " + registrationNumber + ":");
-            System.out.println("Make: " + vehicle.getMake());
-            System.out.println("Model: " + vehicle.getModel());
-            System.out.println("Year: " + vehicle.getModelYear());
+            LOGGER.info("Vehicle Information for Registration Number " + registrationNumber + ":");
+            LOGGER.info("Make: " + vehicle.getMake());
+            LOGGER.info("Model: " + vehicle.getModel());
+            LOGGER.info("Year: " + vehicle.getModelYear());
+            return vehicle;
         } else {
-            System.out.println("Vehicle with registration number " + registrationNumber + " not found.");
+            LOGGER.warn("Vehicle with registration number " + registrationNumber + " not found.");
+            return null;
         }
     }
 

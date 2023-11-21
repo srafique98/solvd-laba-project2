@@ -2,6 +2,7 @@ package com.solvd.laba.people;
 
 import com.solvd.laba.exceptions.InvalidRatingException;
 import com.solvd.laba.interfaces.Displayable;
+import com.solvd.laba.interfaces.DisplayableName;
 import com.solvd.laba.interfaces.Ratable;
 import com.solvd.laba.location.Location;
 import org.apache.logging.log4j.LogManager;
@@ -9,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
-public class Employee extends Person implements Displayable, Ratable {
+public class Employee extends Person implements Displayable, Ratable, DisplayableName {
     private static final Logger LOGGER = LogManager.getLogger(Employee.class);
     private Location location;
     private String jobTittle;
