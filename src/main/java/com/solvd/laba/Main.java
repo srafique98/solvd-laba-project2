@@ -65,12 +65,11 @@ public class Main {
         HashSet<String> phoneNumbers2 = new HashSet<>();
         phoneNumbers.add("123-456-7890");
         phoneNumbers.add("987-654-3210");
-        Customer customer1 = new Customer("John", "Doe", phoneNumbers);
+        Customer customer1 = new Customer("Alice", "Phoebe", phoneNumbers);
 
         Map<String, Customer> customers = new HashMap<>();
         customers.put("000001", customer1);
 
-        // Add other information afterward
         customer1.setVehicles(vehicles);
         customer1.setAppointments(appointments);
         customer1.setservices(services);
@@ -99,7 +98,7 @@ public class Main {
         locations.add(location2);
 
         ArrayList<Employee> employees = new ArrayList<>();
-        Employee employee1 = new Employee("Alice", "Jones", new Location("Sunnyvale", "CA", "123 Main St."), "Mechanic", 50000.00);
+        Employee employee1 = new Employee("TooToo", "His", new Location("Sunnyvale", "CA", "123 Main St."), "Mechanic", 50000.00);
         employees.add(employee1);
 
         Employee employee2 = new Employee("Bob", "Williams", new Location("San Francisco", "CA", "456 Mission St."), "Technician", 40000.00);
@@ -109,5 +108,27 @@ public class Main {
         carService.setCustomers(customers);
         carService.setEmployees(employees);
         System.out.println(carService);
+
+
+        List<Service> services2 = new ArrayList<>();
+        services2.add(new Service("Oil Change"));
+        services2.add(new Service("Tire Rotation"));
+
+        List<Location> locations2 = new ArrayList<>();
+        locations2.add(new Location("City", "Country", "Branch 1"));
+
+        CarService carService2 = new CarService(services2, locations2);
+
+        Customer fakeCustomer = new Customer("shan", "yoo", Set.of("123456789"));
+        Employee fakeEmployee = new Employee("davis", "himmet", locations2.get(0), "Mechanic", 50000.0);
+
+        carService2.getCustomers().put("customer1", fakeCustomer);
+        carService2.getEmployees().add(fakeEmployee);
+
+        CarServiceUtils.printPersonDetails(fakeCustomer);
+        CarServiceUtils.printPersonDetails(fakeEmployee);
+        CarServiceUtils.registerCustomer(carService2);
+        CarServiceUtils.makeAppointment(carService2.getCustomers().get("newCustomer"), carService2);
     }
+
     }
