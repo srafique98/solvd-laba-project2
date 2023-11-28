@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -149,14 +150,16 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
     }
 
     public void writeToFile(String fileName) {
-        try {
+        try (FileWriter writer = new FileWriter(new File(fileName))) {
             List<String> lines = List.of(
                     "First Name: " + getFullName().split(" ")[0],
                     "Last Name: " + getFullName().split(" ")[1],
                     "Phone Number: " + getPhoneNumbers()
             );
 
-            FileUtils.writeLines(new File(fileName), lines);
+            for (String line : lines) {
+                writer.write(line + "\n");
+            }
             LOGGER.info("Customer information written to the file successfully.");
         } catch (IOException e) {
             LOGGER.error("Error writing to the file: " + e.getMessage());
