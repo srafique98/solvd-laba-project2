@@ -11,14 +11,16 @@ import com.solvd.laba.serviceManagement.Appointment;
 import com.solvd.laba.serviceManagement.Part;
 import com.solvd.laba.serviceManagement.Service;
 import com.solvd.laba.serviceManagement.Vehicle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
 public class Main {
+    private static final Logger LOGGER = LogManager.getLogger(Main.class);
     public static void main(String[] args) {
-
         Map<String, Vehicle> vehicles = new HashMap<>();
         LocalDate manufactureDate1 = LocalDate.of(2018, 1, 1);
         boolean isDamaged1 = false;
@@ -74,17 +76,17 @@ public class Main {
         customer1.setAppointments(appointments);
         customer1.setservices(services);
 
-        System.out.println(vehicle1);
-        System.out.println(vehicle2);
-        System.out.println(appointment1);
-        System.out.println(appointment1);
+        LOGGER.info(vehicle1);
+        LOGGER.info(vehicle2);
+        LOGGER.info(appointment1);
+        LOGGER.info(appointment1);
 
-        System.out.println(part1);
-        System.out.println(part2);
-        System.out.println(service1);
-        System.out.println(service2);
+        LOGGER.info(part1);
+        LOGGER.info(part2);
+        LOGGER.info(service1);
+        LOGGER.info(service2);
 
-        System.out.println(customer1);
+        LOGGER.info(customer1);
 
         ArrayList<Location> locations = new ArrayList<>();
         Location location1 = new Location("Sunnyvale", "CA", "123 Main St.");
@@ -107,13 +109,10 @@ public class Main {
         CarService carService = new CarService(services, locations);
         carService.setCustomers(customers);
         carService.setEmployees(employees);
-        System.out.println(carService);
-
+        LOGGER.info(carService);
 
         services.add(new Service("Tire Rotation"));
         locations.add(new Location("City", "Country", "Branch 1"));
-
-
         Customer fakeCustomer = new Customer("shan", "yoo", Set.of("123456789"));
         Employee fakeEmployee = new Employee("davis", "himmet", locations.get(0), "Mechanic", 50000.0);
 

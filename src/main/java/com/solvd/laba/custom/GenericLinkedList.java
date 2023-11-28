@@ -12,11 +12,13 @@ public class GenericLinkedList<T> implements List { // <T> -- defines generic cl
     private int size;
 
     public GenericLinkedList(Node<T> head, int size) {
+        LOGGER.info("GenericLinkedList class has been created.");
         this.head = head;
         this.size = size;
     }
 
     public GenericLinkedList() {
+        LOGGER.warn("Empty GenericLinkedList class has been created.");
         this.head = null;
         this.size = 0;
     }

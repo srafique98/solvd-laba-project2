@@ -30,6 +30,7 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
         this.vehicles = new HashMap<>();
         this.services = new LinkedList<>();
         this.appointments = new ArrayList<>();
+        LOGGER.info("Customer creeated: " + firstName + lastName + ": " + phoneNumbers);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
             Appointment newAppointment = new Appointment(userDate, userTime);
             appointments.add(newAppointment);
 
-            System.out.println("Appointment scheduled successfully for " + userDate + " at " + userTime);
+            LOGGER.info("Appointment scheduled successfully for " + userDate + " at " + userTime);
         } catch (InvalidAppointmentException | AppointmentConflictException e) {
             LOGGER.error(e.getMessage());
             System.out.println(e.getMessage());
@@ -96,16 +97,20 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
 
     public boolean isValidDateAndTime(LocalDate userDate, LocalTime userTime) {
         if (userDate.isBefore(LocalDate.now())) {
+            LOGGER.warn("Invalid Date Time: " + userDate + userTime);
             return false;
         }
+        LOGGER.info("Valid Date Time: " + userDate + userTime);
         return true;
     }
     public boolean hasAppointmentConflict(LocalDate userDate, LocalTime userTime) {
         for (Appointment appointment : appointments) {
             if (appointment.getDate().equals(userDate) && appointment.getTime().equals(userTime)) {
+                LOGGER.warn("Appointment Conflict: " + userDate + userTime);
                 return true;
             }
         }
+        LOGGER.info("No conflict: " + userDate + userTime);
         return false;
     }
     @Override
@@ -117,11 +122,10 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
             }
             Appointment mostRecentAppointment = appointments.get(appointments.size() - 1);
             appointments.remove(mostRecentAppointment);
-            System.out.println("Appointment canceled successfully");
+            LOGGER.info("Appointment canceled successfully");
 
         } catch (NoAppointmentException e) {
             LOGGER.error(e.getMessage());
-            System.out.println(e.getMessage());
         }
 
     }

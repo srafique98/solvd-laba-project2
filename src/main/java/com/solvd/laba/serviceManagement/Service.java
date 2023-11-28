@@ -20,6 +20,7 @@ public class Service implements Chargeable {
         this.name = name;
         this.serviceStatus = "scheduled";
         this.parts = new ArrayList<>();
+        LOGGER.info("Service has been created: " + name);
     }
 
     public String getName() { return name; }
@@ -39,6 +40,7 @@ public class Service implements Chargeable {
 
     public void completeService() {
         if (this.serviceStatus.equals("Scheduled")) {
+            LOGGER.info("Service completed: ");
             this.serviceStatus = "Completed";
         } else {
             LOGGER.warn("Service cannot be completed as it is not scheduled.");
@@ -57,6 +59,7 @@ public class Service implements Chargeable {
     @Override
     public void applyDiscount(double discountPercentage) {
         double discountAmount = this.totalCharge() * discountPercentage;
+        LOGGER.info("Applying discount on service: " + (this.totalCharge() - discountAmount));
         this.setTotalCost(this.totalCharge() - discountAmount);
     }
 

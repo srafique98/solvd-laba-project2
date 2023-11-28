@@ -20,10 +20,12 @@ public class Location implements Ratable, Displayable, DisplayableName {
     private static int locationCount;
 
     static { // this is Static block
+        LOGGER.info("Location class has been created.");
         locationCount = 0; }
 
 
     public Location(String city, String country, String branchName) {
+        LOGGER.info("A location has spurred up: " + country + ", " + city + ", " + branchName);
         this.city = city;
         this.country = country;
         this.branchName = branchName;
@@ -72,6 +74,7 @@ public class Location implements Ratable, Displayable, DisplayableName {
 
     public int yearsOfService() {
         LocalDate currentDate = LocalDate.now();
+        LOGGER.info("Years of service is: " + (currentDate.getYear() - establishedDate.getYear()));
         return currentDate.getYear() - establishedDate.getYear();
     }
     @Override
@@ -81,9 +84,10 @@ public class Location implements Ratable, Displayable, DisplayableName {
     @Override
     public void rate(double newRating) {
         if (newRating < 0 || newRating > 5) {
+            LOGGER.warn("Invalid rating: " + newRating);
             throw new InvalidRatingException("Invalid rating: " + newRating);
         }
-        System.out.println("Rating the location with a new rating of " + newRating);
+        LOGGER.info("Rating the location with a new rating of " + newRating);
         this.rating = newRating;
     }
 

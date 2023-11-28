@@ -18,12 +18,14 @@ public class Appointment implements Scheduleable {
         this.date = date;
         this.time = time;
         this.status = "Scheduled";
+        LOGGER.info("Appointment scheduled for: " + date + " " + time);
     }
 
     public Appointment(LocalDate date, LocalTime time, String status) {
         this.date = date;
         this.time = time;
         this.status = status;
+        LOGGER.info("Appointment: " + date + " " + time + " " + status);
     }
 
     public LocalDate getDate() {
@@ -55,6 +57,7 @@ public class Appointment implements Scheduleable {
             LOGGER.error("Appointment date cannot be in the past");
             throw new IllegalArgumentException("Appointment date cannot be in the past");
         }
+        LOGGER.info("Appointment scheduled successfully");
         this.date = userDate;
         this.time = userTime;
         this.status = "Scheduled";
@@ -76,6 +79,7 @@ public class Appointment implements Scheduleable {
             LOGGER.error("Appointment has already been completed");
             throw new IllegalStateException("Appointment has already been completed");
         }
+        LOGGER.info("Canceling appointment");
         this.date = null;
         this.time = null;
         this.status = "Cancelled";

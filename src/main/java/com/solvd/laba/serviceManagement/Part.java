@@ -15,6 +15,7 @@ public class Part implements Repairable {
     public Part(String name, double price) {
         this.name = name;
         this.price = price;
+        LOGGER.info("Part: " + name + ": " + price);
     }
 
     public Part(String name, String description, String manufacturer, double price, String condition) {
@@ -23,6 +24,7 @@ public class Part implements Repairable {
         this.manufacturer = manufacturer;
         this.price = price;
         this.condition = condition;
+        LOGGER.info("Part: " + name + ": " + description + ", " + manufacturer + ", " + price + ", " + condition);
     }
 
     public String getName() {
@@ -78,8 +80,10 @@ public class Part implements Repairable {
     @Override
     public boolean isDamaged() {
         if (this.condition.equals("Poor")){
+            LOGGER.info("Part is damaged");
             return true;
         }
+        LOGGER.info("Part is NOT damaged: " + getCondition());
         return false;
     }
 

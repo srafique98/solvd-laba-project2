@@ -20,11 +20,13 @@ public class Cost implements Chargeable {
 
 
     public Cost(double totalCost, String currencyType) {
+        LOGGER.info("Cost class has been created: " + totalCost + " " + currencyType);
         this.totalCost = totalCost;
         this.currencyType = currencyType;
     }
 
     public Cost(double laborCost, double partsCost, double serviceFee) {
+        LOGGER.info("Cost class has been created: " + laborCost + ", " + partsCost + ", " + serviceFee);
         this.laborCost = laborCost;
         this.partsCost = partsCost;
         this.serviceFee = serviceFee;
@@ -45,6 +47,7 @@ public class Cost implements Chargeable {
         }
         this.laborCost = laborCost;
         calculateTotalCost();
+        LOGGER.info("Sucessfully set Labor cost");
     }
 
     public double getPartsCost() {
@@ -71,6 +74,7 @@ public class Cost implements Chargeable {
         }
         this.serviceFee = serviceFee;
         calculateTotalCost();
+        LOGGER.info("Sucessfully service fee");
     }
 
     public double getTotalCost() {
@@ -86,11 +90,11 @@ public class Cost implements Chargeable {
     }
 
     public static void printCostBreakdown(Cost cost) {
-        System.out.println("Cost Breakdown:");
-        System.out.println("Labor Cost: $" + cost.getLaborCost());
-        System.out.println("Parts Cost: $" + cost.getPartsCost());
-        System.out.println("Service Fee: $" + cost.getServiceFee());
-        System.out.println("Total Cost: $" + cost.getTotalCost());
+        LOGGER.info("Cost Breakdown:");
+        LOGGER.info("Labor Cost: $" + cost.getLaborCost());
+        LOGGER.info("Parts Cost: $" + cost.getPartsCost());
+        LOGGER.info("Service Fee: $" + cost.getServiceFee());
+        LOGGER.info("Total Cost: $" + cost.getTotalCost());
     }
 
     public void validateCost() throws InvalidCostException {
@@ -108,6 +112,7 @@ public class Cost implements Chargeable {
 
         double discountedCost = totalCost * (1 - discountRate);
         this.totalCost = discountedCost;
+        LOGGER.info("Discount has been applied: " + discountedCost);
     }
 
     @Override

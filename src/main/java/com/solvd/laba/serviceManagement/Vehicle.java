@@ -27,6 +27,7 @@ public class Vehicle implements Repairable {
         this.make = make;
         this.owner = owner;
         this.damagedParts = new ArrayList<>();
+        LOGGER.info("Created vehicle class: " + modelYear + " " + make + " " + model + " " + owner);
     }
 
     public Person getOwner() { return owner; }
@@ -62,6 +63,7 @@ public class Vehicle implements Repairable {
     }
     public int getAge() {
         LocalDate currentDate = LocalDate.now();
+        LOGGER.info("Age of car is: " + (currentDate.getYear() - manufactureDate.getYear()));
         return currentDate.getYear() - manufactureDate.getYear();
     }
     public List<Part> getDamagedParts() {
@@ -74,10 +76,12 @@ public class Vehicle implements Repairable {
         }
     }
     public void addDamagedPart(Part damagedPart) {
+        LOGGER.info("Adding damage part: " + damagedPart.toString());
         this.damagedParts.add(damagedPart);
         this.isDamaged = true;
     }
     public void removeDamagedPart(Part damagedPart) {
+        LOGGER.info("Removing damage part: " + damagedPart.toString());
         this.damagedParts.remove(damagedPart);
         if (damagedParts.isEmpty()) {
             this.isDamaged = false;
@@ -86,15 +90,15 @@ public class Vehicle implements Repairable {
     @Override
     public void repair() {
         if (isDamaged()) {
-            System.out.println("Repairing the following damaged parts:");
+            LOGGER.info("Repairing the following damaged parts:");
             for (Part damagedPart : damagedParts) {
                 damagedPart.repair();
             }
             damagedParts.clear();
             this.isDamaged = false;
-            System.out.println("Vehicle repair completed.");
+            LOGGER.info("Vehicle repair completed.");
         } else {
-            System.out.println("Vehicle is not damaged and does not require repair.");
+            LOGGER.info("Vehicle is not damaged and does not require repair.");
         }
     }
 

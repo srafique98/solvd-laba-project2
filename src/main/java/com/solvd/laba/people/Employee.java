@@ -19,6 +19,7 @@ public class Employee extends Person implements Displayable, Ratable, Displayabl
 
     public Employee(String fName, String lName, Location location, String jobTittle, double salary) {
         super(fName,lName);
+        LOGGER.info("Employee created: " + fName + " " + lName + ", " + location + ", " + jobTittle + ", " + salary);
         this.location = location;
         this.jobTittle = jobTittle;
         this.salary = salary;
@@ -69,7 +70,7 @@ public class Employee extends Person implements Displayable, Ratable, Displayabl
             LOGGER.error("Invalid rating: " + newRating);
             throw new InvalidRatingException("Invalid rating: " + newRating);
         }
-        System.out.println("Rating the employee with a new rating of " + newRating);
+        LOGGER.info("Rating the employee with a new rating of " + newRating);
         this.ratings = newRating;
     }
 
