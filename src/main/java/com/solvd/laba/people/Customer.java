@@ -10,9 +10,13 @@ import com.solvd.laba.exceptions.InvalidAppointmentException;
 import com.solvd.laba.exceptions.NoAppointmentException;
 import com.solvd.laba.interfaces.Displayable;
 import com.solvd.laba.interfaces.Scheduleable;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -30,7 +34,7 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
         this.vehicles = new HashMap<>();
         this.services = new LinkedList<>();
         this.appointments = new ArrayList<>();
-        LOGGER.info("Customer creeated: " + firstName + lastName + ": " + phoneNumbers);
+        LOGGER.info("Customer creeated: " + firstName + lastName + ": " + phoneNumbers.toString());
     }
 
     @Override
@@ -140,6 +144,36 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
             return vehicle;
         } else {
             LOGGER.warn("Vehicle with registration number " + registrationNumber + " not found.");
+            return null;
+        }
+    }
+
+    public void writeToFile(String fileName) {
+        try {
+            List<String> lines = List.of(
+                    "First Name: " + getFullName().split(" ")[0],
+                    "Last Name: " + getFullName().split(" ")[1],
+                    "Phone Number: " + getPhoneNumbers()
+            );
+
+            FileUtils.writeLines(new File(fileName), lines);
+            LOGGER.info("Customer information written to the file successfully.");
+        } catch (IOException e) {
+            LOGGER.error("Error writing to the file: " + e.getMessage());
+        }
+    }
+
+    public static Customer readFromFile(String fileName) {
+        try {
+            HashSet<String> phoneNumber = new HashSet<>();
+            List<String> lines = FileUtils.readLines(new File(fileName));
+            String firstName = StringUtils.substringAfter(lines.get(0),  "First Name: ");
+            String lastName = StringUtils.substringAfter(lines.get(0),  "Last Name: ");
+            phoneNumber.add(StringUtils.substringAfter(lines.get(1), "Phone Number: "));
+
+            return new Customer(firstName, lastName, phoneNumber);
+        } catch (IOException e) {
+            LOGGER.error("Error reading from the file: " + e.getMessage());
             return null;
         }
     }

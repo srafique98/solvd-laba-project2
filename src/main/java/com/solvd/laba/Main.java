@@ -123,6 +123,8 @@ public class Main {
         CarServiceUtils.printPersonDetails(fakeEmployee);
         CarServiceUtils.registerCustomer(carService);
         CarServiceUtils.makeAppointment(carService.getCustomers().get("newCustomer"), carService);
+
+        Customer readCustomer = CarServiceUtils.readCustomerFromFile("customerInfo.txt");
     }
 
     }
