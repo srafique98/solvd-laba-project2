@@ -110,25 +110,20 @@ public class Main {
         System.out.println(carService);
 
 
-        List<Service> services2 = new ArrayList<>();
-        services2.add(new Service("Oil Change"));
-        services2.add(new Service("Tire Rotation"));
+        services.add(new Service("Tire Rotation"));
+        locations.add(new Location("City", "Country", "Branch 1"));
 
-        List<Location> locations2 = new ArrayList<>();
-        locations2.add(new Location("City", "Country", "Branch 1"));
-
-        CarService carService2 = new CarService(services2, locations2);
 
         Customer fakeCustomer = new Customer("shan", "yoo", Set.of("123456789"));
-        Employee fakeEmployee = new Employee("davis", "himmet", locations2.get(0), "Mechanic", 50000.0);
+        Employee fakeEmployee = new Employee("davis", "himmet", locations.get(0), "Mechanic", 50000.0);
 
-        carService2.getCustomers().put("customer1", fakeCustomer);
-        carService2.getEmployees().add(fakeEmployee);
+        carService.getCustomers().put("customer1", fakeCustomer);
+        carService.getEmployees().add(fakeEmployee);
 
         CarServiceUtils.printPersonDetails(fakeCustomer);
         CarServiceUtils.printPersonDetails(fakeEmployee);
-        CarServiceUtils.registerCustomer(carService2);
-        CarServiceUtils.makeAppointment(carService2.getCustomers().get("newCustomer"), carService2);
+        CarServiceUtils.registerCustomer(carService);
+        CarServiceUtils.makeAppointment(carService.getCustomers().get("newCustomer"), carService);
     }
 
     }

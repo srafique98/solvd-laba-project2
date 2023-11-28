@@ -16,7 +16,7 @@ import java.util.Map;
 public class CarService {
 
     private static final Logger LOGGER = LogManager.getLogger(CarService.class);
-    private Map<String, Customer> customers; //A map of customers email/ID to their information.
+    private Map<String, Customer> customers; //A map of customers email to their information.
     private List<Employee> employees;
     private List<Service> services;
     private List<Location> locations;
