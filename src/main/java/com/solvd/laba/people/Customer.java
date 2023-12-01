@@ -149,8 +149,10 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
         }
     }
 
-    public void writeToFile(String fileName) {
-        try (FileWriter writer = new FileWriter(new File(fileName))) {
+    public void writeToFile() {
+        String fileName = "src/main/resources/customerInfo.txt"; // no beginning / means relative path
+        boolean appendToFile = new File(fileName).exists();
+        try (FileWriter writer = new FileWriter(new File(fileName), appendToFile)) {
             List<String> lines = List.of(
                     "First Name: " + getFullName().split(" ")[0],
                     "Last Name: " + getFullName().split(" ")[1],
@@ -160,6 +162,7 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
             for (String line : lines) {
                 writer.write(line + "\n");
             }
+            writer.write("\n");
             LOGGER.info("Customer information written to the file successfully.");
         } catch (IOException e) {
             LOGGER.error("Error writing to the file: " + e.getMessage());

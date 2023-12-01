@@ -15,8 +15,8 @@ import java.util.Set;
 
 public class CarServiceUtils {
 
-    public static void writeCustomerToFile(Customer customer, String fileName) {
-        customer.writeToFile(fileName);
+    public static void writeCustomerToFile(Customer customer) {
+        customer.writeToFile();
     }
 
     public static Customer readCustomerFromFile(String fileName) {
@@ -74,7 +74,7 @@ public class CarServiceUtils {
         } while (!isValidPhoneNumber(phoneNumber));
 
         Customer newCustomer = new Customer(firstName, lastName, Set.of(phoneNumber));
-        writeCustomerToFile(newCustomer, "customerInfo.txt");
+        writeCustomerToFile(newCustomer);
         carService.getCustomers().put(customerId, newCustomer);
         System.out.println("Customer registered successfully!");
     }
