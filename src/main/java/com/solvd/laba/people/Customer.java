@@ -1,7 +1,6 @@
 package com.solvd.laba.people;
 
 import com.solvd.laba.interfaces.DisplayableName;
-import com.solvd.laba.location.Location;
 import com.solvd.laba.serviceManagement.Service;
 import com.solvd.laba.serviceManagement.Appointment;
 import com.solvd.laba.serviceManagement.Vehicle;
@@ -26,7 +25,7 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
     private static final Logger LOGGER = LogManager.getLogger(Customer.class);
     private Set<String> phoneNumbers; // unique phone number only! use SET interface able to extend application easier
     private List<Appointment> appointments;
-    private  List<Service> services;
+    private List<Service> services;
     private Map<String, Vehicle> vehicles; // registration number to Car objects
 
     public Customer(String firstName, String lastName, Set<String> phoneNumbers) {
@@ -57,8 +56,6 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
     public void setVehicles(Map<String, Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
-
-
     public Set<String> getPhoneNumbers() { return phoneNumbers; }
 
     public void setPhoneNumbers(Set<String> phoneNumbers) { this.phoneNumbers = phoneNumbers; }
@@ -96,7 +93,6 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
             LOGGER.info("Appointment scheduled successfully for " + userDate + " at " + userTime);
         } catch (InvalidAppointmentException | AppointmentConflictException e) {
             LOGGER.error(e.getMessage());
-            System.out.println(e.getMessage());
         }
     }
 
@@ -169,7 +165,8 @@ public class Customer extends Person implements Displayable, Scheduleable, Displ
         }
     }
 
-    public static Customer readFromFile(String fileName) {
+    public static Customer readFromFile() {
+        String fileName = "src/main/resources/customerInfo.txt";
         try {
             HashSet<String> phoneNumber = new HashSet<>();
             List<String> lines = FileUtils.readLines(new File(fileName));

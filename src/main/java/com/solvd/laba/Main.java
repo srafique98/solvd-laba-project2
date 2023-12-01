@@ -69,8 +69,8 @@ public class Main {
         phoneNumbers.add("987-654-3210");
         Customer customer1 = new Customer("Alice", "Phoebe", phoneNumbers);
 
-        Map<String, Customer> customers = new HashMap<>();
-        customers.put("000001", customer1);
+        ArrayList<Customer> customers = new ArrayList<>();
+        customers.add(customer1);
 
         customer1.setVehicles(vehicles);
         customer1.setAppointments(appointments);
@@ -116,15 +116,15 @@ public class Main {
         Customer fakeCustomer = new Customer("shan", "yoo", Set.of("123456789"));
         Employee fakeEmployee = new Employee("davis", "himmet", locations.get(0), "Mechanic", 50000.0);
 
-        carService.getCustomers().put("customer1", fakeCustomer);
+        carService.getCustomers().add(fakeCustomer);
         carService.getEmployees().add(fakeEmployee);
 
         CarServiceUtils.printPersonDetails(fakeCustomer);
         CarServiceUtils.printPersonDetails(fakeEmployee);
         CarServiceUtils.registerCustomer(carService);
-        CarServiceUtils.makeAppointment(carService.getCustomers().get("newCustomer"), carService);
 
-        Customer readCustomer = CarServiceUtils.readCustomerFromFile("customerInfo.txt");
+        CarServiceUtils.makeAppointment(carService.getCustomers().get(carService.getCustomers().size()-1), carService);
+//        Customer readCustomer = CarServiceUtils.readCustomerFromFile();
     }
 
     }

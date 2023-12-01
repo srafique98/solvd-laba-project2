@@ -19,8 +19,8 @@ public class CarServiceUtils {
         customer.writeToFile();
     }
 
-    public static Customer readCustomerFromFile(String fileName) {
-        return Customer.readFromFile(fileName);
+    public static Customer readCustomerFromFile() {
+        return Customer.readFromFile();
     }
 
     public static void printPersonDetails(Person person) {
@@ -38,7 +38,7 @@ public class CarServiceUtils {
         }
     }
     public static void printAllCustomers(CarService carService) {
-        for (Customer customer : carService.getCustomers().values()) {
+        for (Customer customer : carService.getCustomers()) {
             System.out.println(customer.toString());
         }
     }
@@ -75,7 +75,7 @@ public class CarServiceUtils {
 
         Customer newCustomer = new Customer(firstName, lastName, Set.of(phoneNumber));
         writeCustomerToFile(newCustomer);
-        carService.getCustomers().put(customerId, newCustomer);
+        carService.getCustomers().add(newCustomer);
         System.out.println("Customer registered successfully!");
     }
     private static boolean isValidEmail(String email) {
