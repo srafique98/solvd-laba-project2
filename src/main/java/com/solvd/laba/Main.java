@@ -1,9 +1,9 @@
 package com.solvd.laba;
 
 import com.solvd.laba.billing.Cost;
-import com.solvd.laba.exceptions.AppointmentConflictException;
-import com.solvd.laba.exceptions.InvalidAppointmentException;
-import com.solvd.laba.exceptions.NoAppointmentException;
+import com.solvd.laba.enums.Country;
+import com.solvd.laba.enums.CurrencyType;
+import com.solvd.laba.enums.Status;
 import com.solvd.laba.location.Location;
 import com.solvd.laba.people.Customer;
 import com.solvd.laba.people.Employee;
@@ -38,11 +38,11 @@ public class Main {
         List<Appointment> appointments = new ArrayList<>();
 
         Appointment appointment1 = new Appointment(LocalDate.of(2023, 10, 4), LocalTime.of(9, 0));
-        appointment1.setStatus("Scheduled");
+        appointment1.setStatus(Status.SCHEDULED);
         appointments.add(appointment1);
 
         Appointment appointment2 = new Appointment(LocalDate.of(2023, 10, 5), LocalTime.of(10, 0));
-        appointment2.setStatus("Completed");
+        appointment2.setStatus(Status.COMPLETED);
         appointments.add(appointment2);
 
         LinkedList<Service> services = new LinkedList<>();
@@ -52,16 +52,16 @@ public class Main {
         parts.add(part1);
         parts.add(part2);
         Service service1 = new Service("Brake Repair");
-        service1.setServiceStatus("Completed");
-        service1.setCost(new Cost(250.00, "USD"));
+        service1.setServiceStatus(Status.COMPLETED);
+        service1.setCost(new Cost(250.00, CurrencyType.USD));
         services.add(service1);
 
         Part part3 = new Part("Oil Filter", 10.00);
         List<Part> parts2 = new ArrayList<>();
         parts2.add(part3);
         Service service2 = new Service("Oil Change");
-        service1.setServiceStatus("Completed");
-        service1.setCost(new Cost(30.00, "USD"));
+        service1.setServiceStatus(Status.COMPLETED);
+        service1.setCost(new Cost(30.00, CurrencyType.USD));
         services.add(service2);
 
         HashSet<String> phoneNumbers2 = new HashSet<>();
@@ -89,21 +89,21 @@ public class Main {
         LOGGER.info(customer1);
 
         ArrayList<Location> locations = new ArrayList<>();
-        Location location1 = new Location("Sunnyvale", "CA", "123 Main St.");
+        Location location1 = new Location("Sunnyvale", Country.USA, "123 Main St.");
         location1.setEstablishedDate(LocalDate.of(2015, 1, 1));
         location1.rate(4.5);
         locations.add(location1);
 
-        Location location2 = new Location("San Francisco", "CA", "456 Mission St.");
+        Location location2 = new Location("San Francisco", Country.USA, "456 Mission St.");
         location2.setEstablishedDate(LocalDate.of(2010, 1, 1));
         location2.rate(4.8);
         locations.add(location2);
 
         ArrayList<Employee> employees = new ArrayList<>();
-        Employee employee1 = new Employee("TooToo", "His", new Location("Sunnyvale", "CA", "123 Main St."), "Mechanic", 50000.00);
+        Employee employee1 = new Employee("TooToo", "His", new Location("Sunnyvale", Country.USA, "123 Main St."), "Mechanic", 50000.00);
         employees.add(employee1);
 
-        Employee employee2 = new Employee("Bob", "Williams", new Location("San Francisco", "CA", "456 Mission St."), "Technician", 40000.00);
+        Employee employee2 = new Employee("Bob", "Williams", new Location("San Francisco", Country.USA, "456 Mission St."), "Technician", 40000.00);
         employees.add(employee2);
 
         CarService carService = new CarService(services, locations);
@@ -112,7 +112,7 @@ public class Main {
         LOGGER.info(carService);
 
         services.add(new Service("Tire Rotation"));
-        locations.add(new Location("City", "Country", "Branch 1"));
+        locations.add(new Location("City", Country.USA, "Branch 1"));
         Customer fakeCustomer = new Customer("shan", "yoo", Set.of("123456789"));
         Employee fakeEmployee = new Employee("davis", "himmet", locations.get(0), "Mechanic", 50000.0);
 

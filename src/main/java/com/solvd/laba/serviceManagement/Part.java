@@ -1,30 +1,24 @@
 package com.solvd.laba.serviceManagement;
 
+import com.solvd.laba.enums.PartCondition;
 import com.solvd.laba.interfaces.Repairable;
+import com.solvd.laba.interfaces.InventoryManageable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Part implements Repairable {
     private static final Logger LOGGER = LogManager.getLogger(Part.class);
-    private String name;
+    private String name; // this is our unique identifier for Part
     private String description;
     private String manufacturer;
     private double price;
-    private String condition; // New, Used, Good, Fair, Poor
+    private PartCondition condition;
+    private int quantity;
 
     public Part(String name, double price) {
         this.name = name;
         this.price = price;
         LOGGER.info("Part: " + name + ": " + price);
-    }
-
-    public Part(String name, String description, String manufacturer, double price, String condition) {
-        this.name = name;
-        this.description = description;
-        this.manufacturer = manufacturer;
-        this.price = price;
-        this.condition = condition;
-        LOGGER.info("Part: " + name + ": " + description + ", " + manufacturer + ", " + price + ", " + condition);
     }
 
     public String getName() {
@@ -59,18 +53,18 @@ public class Part implements Repairable {
         this.price = price;
     }
 
-    public String getCondition() {
+    public PartCondition getCondition() {
         return condition;
     }
 
-    public void setCondition(String condition) {
+    public void setCondition(PartCondition condition) {
         this.condition = condition;
     }
 
     @Override
     public void repair() {
         if (isDamaged()) {
-            this.condition = "Good";
+            this.condition = PartCondition.USED;
             LOGGER.info(this.name + " has been repaired and is now in good condition.");
         } else {
             LOGGER.info(this.name + " is not damaged and does not require repair.");
@@ -79,7 +73,7 @@ public class Part implements Repairable {
 
     @Override
     public boolean isDamaged() {
-        if (this.condition.equals("Poor")){
+        if (this.condition == PartCondition.DAMAGED){
             LOGGER.info("Part is damaged");
             return true;
         }
@@ -97,4 +91,21 @@ public class Part implements Repairable {
                 ", condition='" + condition + '\'' +
                 '}';
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void addQuantity(int amount) {
+        this.quantity += amount;
+    }
+
+    public void substractQuantity(int amount) {
+        this.quantity -= amount;
+    }
+
 }

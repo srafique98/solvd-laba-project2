@@ -1,34 +1,36 @@
 package com.solvd.laba.location;
 
-import com.solvd.laba.billing.Cost;
+import com.solvd.laba.Inventory;
+import com.solvd.laba.enums.Country;
 import com.solvd.laba.exceptions.InvalidRatingException;
-import com.solvd.laba.interfaces.Displayable;
-import com.solvd.laba.interfaces.DisplayableName;
+import com.solvd.laba.interfaces.InventoryManageable;
 import com.solvd.laba.interfaces.Ratable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 
-public class Location implements Ratable, Displayable, DisplayableName {
+public class Location implements Ratable, InventoryManageable {
     private static final Logger LOGGER = LogManager.getLogger(Location.class);
     private String city;
-    private String country;
+    private Country country;
     private String branchName;
     private LocalDate establishedDate;
     private double rating;
     private static int locationCount;
+    private Inventory inventory;
 
     static { // this is Static block
         LOGGER.info("Location class has been created.");
         locationCount = 0; }
 
 
-    public Location(String city, String country, String branchName) {
+    public Location(String city, Country country, String branchName) {
         LOGGER.info("A location has spurred up: " + country + ", " + city + ", " + branchName);
         this.city = city;
         this.country = country;
         this.branchName = branchName;
+        this.inventory = new Inventory();
         locationCount++;
     }
 
@@ -40,13 +42,7 @@ public class Location implements Ratable, Displayable, DisplayableName {
         this.city = city;
     }
 
-    public String getCountry() {
-        return country;
-    }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
 
     public String getBranchName() {
         return branchName;
@@ -72,6 +68,14 @@ public class Location implements Ratable, Displayable, DisplayableName {
         Location.locationCount = locationCount;
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
     public int yearsOfService() {
         LocalDate currentDate = LocalDate.now();
         LOGGER.info("Years of service is: " + (currentDate.getYear() - establishedDate.getYear()));
@@ -91,17 +95,6 @@ public class Location implements Ratable, Displayable, DisplayableName {
         this.rating = newRating;
     }
 
-    @Override
-    public String getFullName() {
-        return this.getBranchName();
-    }
-
-    @Override
-    public String getInfo() {
-        LOGGER.info(this.toString());
-        return this.toString();
-    }
-
     public String getFullAddress() {
         return city + ", " + country;
     }
@@ -118,6 +111,16 @@ public class Location implements Ratable, Displayable, DisplayableName {
                 ", establishedDate=" + establishedDate +
                 ", ratings=" + rating +
                 '}';
+    }
+
+    @Override
+    public void addQuantity(String partName, int amount) {
+        inventory.addQuantity(partName,amount);
+    }
+
+    @Override
+    public void substractQuantity(String partName, int amount) {
+        inventory.substractQuantity(partName,amount);
     }
 }
 

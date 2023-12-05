@@ -1,6 +1,5 @@
 package com.solvd.laba.people;
 
-import com.solvd.laba.billing.Cost;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

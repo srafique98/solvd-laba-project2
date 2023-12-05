@@ -1,5 +1,6 @@
 package com.solvd.laba.billing;
 
+import com.solvd.laba.enums.CurrencyType;
 import com.solvd.laba.exceptions.InvalidCostException;
 import com.solvd.laba.exceptions.InvalidDiscountException;
 import com.solvd.laba.interfaces.Chargeable;
@@ -16,10 +17,10 @@ public class Cost implements Chargeable {
     private double partsCost;
     private double serviceFee;
     private double totalCost;
-    private String currencyType;
+    private CurrencyType currencyType;
 
 
-    public Cost(double totalCost, String currencyType) {
+    public Cost(double totalCost, CurrencyType currencyType) {
         LOGGER.info("Cost class has been created: " + totalCost + " " + currencyType);
         this.totalCost = totalCost;
         this.currencyType = currencyType;

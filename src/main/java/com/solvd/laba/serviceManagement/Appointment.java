@@ -1,5 +1,6 @@
 package com.solvd.laba.serviceManagement;
 
+import com.solvd.laba.enums.Status;
 import com.solvd.laba.interfaces.Scheduleable;
 import com.solvd.laba.people.Employee;
 import org.apache.logging.log4j.LogManager;
@@ -12,16 +13,16 @@ public class Appointment implements Scheduleable {
     private static final Logger LOGGER = LogManager.getLogger(Appointment.class);
     private LocalDate date;
     private LocalTime time;
-    private String status;
+    private Status status;
 
     public Appointment(LocalDate date, LocalTime time) {
         this.date = date;
         this.time = time;
-        this.status = "Scheduled";
+        this.status = Status.SCHEDULED;
         LOGGER.info("Appointment scheduled for: " + date + " " + time);
     }
 
-    public Appointment(LocalDate date, LocalTime time, String status) {
+    public Appointment(LocalDate date, LocalTime time, Status status) {
         this.date = date;
         this.time = time;
         this.status = status;
@@ -44,11 +45,11 @@ public class Appointment implements Scheduleable {
         this.time = time;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -60,7 +61,7 @@ public class Appointment implements Scheduleable {
         LOGGER.info("Appointment scheduled successfully");
         this.date = userDate;
         this.time = userTime;
-        this.status = "Scheduled";
+        this.status = Status.SCHEDULED;
 
     }
 
@@ -82,7 +83,7 @@ public class Appointment implements Scheduleable {
         LOGGER.info("Canceling appointment");
         this.date = null;
         this.time = null;
-        this.status = "Cancelled";
+        this.status = Status.CANCELLED;
     }
 
     @Override

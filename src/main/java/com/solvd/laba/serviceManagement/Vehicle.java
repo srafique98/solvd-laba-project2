@@ -1,6 +1,7 @@
 package com.solvd.laba.serviceManagement;
 
 import com.solvd.laba.CarService;
+import com.solvd.laba.enums.VehicleCondition;
 import com.solvd.laba.interfaces.Repairable;
 import com.solvd.laba.people.Customer;
 import com.solvd.laba.people.Person;
@@ -19,14 +20,13 @@ public class Vehicle implements Repairable {
     private String make;
     private LocalDate manufactureDate;
     private  List<Part> damagedParts;
-    private boolean isDamaged;
+    private VehicleCondition condition;
 
     public Vehicle(LocalDate modelYear, String model, String make, Customer owner) {
         this.modelYear = modelYear;
         this.model = model;
         this.make = make;
         this.owner = owner;
-        this.damagedParts = new ArrayList<>();
         LOGGER.info("Created vehicle class: " + modelYear + " " + make + " " + model + " " + owner);
     }
 
@@ -72,19 +72,19 @@ public class Vehicle implements Repairable {
     public void setDamagedParts(List<Part> damagedParts) {
         this.damagedParts = damagedParts;
         if (!damagedParts.isEmpty()) {
-            this.isDamaged = true;
+            this.condition = VehicleCondition.DAMAGED;
         }
     }
     public void addDamagedPart(Part damagedPart) {
         LOGGER.info("Adding damage part: " + damagedPart.toString());
         this.damagedParts.add(damagedPart);
-        this.isDamaged = true;
+        this.condition = VehicleCondition.DAMAGED;
     }
     public void removeDamagedPart(Part damagedPart) {
         LOGGER.info("Removing damage part: " + damagedPart.toString());
         this.damagedParts.remove(damagedPart);
         if (damagedParts.isEmpty()) {
-            this.isDamaged = false;
+            this.condition = VehicleCondition.GOOD;
         }
     }
     @Override
@@ -95,7 +95,7 @@ public class Vehicle implements Repairable {
                 damagedPart.repair();
             }
             damagedParts.clear();
-            this.isDamaged = false;
+            this.condition = VehicleCondition.GOOD;
             LOGGER.info("Vehicle repair completed.");
         } else {
             LOGGER.info("Vehicle is not damaged and does not require repair.");
@@ -104,7 +104,10 @@ public class Vehicle implements Repairable {
 
     @Override
     public boolean isDamaged() {
-        return this.isDamaged;
+        if (condition == VehicleCondition.DAMAGED){
+            return  true;
+        }
+        return false;
     }
 
     @Override
@@ -116,7 +119,7 @@ public class Vehicle implements Repairable {
                 ", make='" + make + '\'' +
                 ", manufactureDate=" + manufactureDate +
                 ", damagedParts=" + damagedParts +
-                ", isDamaged=" + isDamaged +
+                ", Condition=" + condition +
                 '}';
     }
 }

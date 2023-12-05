@@ -1,13 +1,11 @@
 package com.solvd.laba.people;
 
-import com.solvd.laba.interfaces.DisplayableName;
 import com.solvd.laba.serviceManagement.Service;
 import com.solvd.laba.serviceManagement.Appointment;
 import com.solvd.laba.serviceManagement.Vehicle;
 import com.solvd.laba.exceptions.AppointmentConflictException;
 import com.solvd.laba.exceptions.InvalidAppointmentException;
 import com.solvd.laba.exceptions.NoAppointmentException;
-import com.solvd.laba.interfaces.Displayable;
 import com.solvd.laba.interfaces.Scheduleable;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Customer extends Person implements Displayable, Scheduleable, DisplayableName {
+public class Customer extends Person implements Scheduleable {
     private static final Logger LOGGER = LogManager.getLogger(Customer.class);
     private Set<String> phoneNumbers; // unique phone number only! use SET interface able to extend application easier
     private List<Appointment> appointments;

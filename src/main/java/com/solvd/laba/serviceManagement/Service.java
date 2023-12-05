@@ -1,5 +1,7 @@
 package com.solvd.laba.serviceManagement;
 
+import com.solvd.laba.enums.CurrencyType;
+import com.solvd.laba.enums.Status;
 import com.solvd.laba.interfaces.Chargeable;
 import com.solvd.laba.billing.Cost;
 import org.apache.logging.log4j.LogManager;
@@ -8,17 +10,18 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Service implements Chargeable {
     private static final Logger LOGGER = LogManager.getLogger(Service.class);
     private String name;
     private List<Part> parts;
     private Cost cost;
-    private String serviceStatus; // enum: scheduled, completed, canceled
+    private Status serviceStatus;
     private static int totalServicesPerformed = 0;
 
     public Service(String name) {
         this.name = name;
-        this.serviceStatus = "scheduled";
+        this.serviceStatus = Status.IN_PROGRESS;
         this.parts = new ArrayList<>();
         LOGGER.info("Service has been created: " + name);
     }
@@ -29,8 +32,14 @@ public class Service implements Chargeable {
     public void setParts(List<Part> parts) { this.parts = parts; }
     public Cost getCost() { return cost; }
     public void setCost(Cost cost) { this.cost = cost; }
-    public String getServiceStatus() { return serviceStatus; }
-    public void setServiceStatus(String serviceStatus) { this.serviceStatus = serviceStatus;}
+
+    public Status getServiceStatus() {
+        return serviceStatus;
+    }
+
+    public void setServiceStatus(Status serviceStatus) {
+        this.serviceStatus = serviceStatus;
+    }
 
     public static int getTotalServicesPerformed() { return totalServicesPerformed; }
 
@@ -39,9 +48,9 @@ public class Service implements Chargeable {
     }
 
     public void completeService() {
-        if (this.serviceStatus.equals("Scheduled")) {
+        if (this.serviceStatus.equals(Status.SCHEDULED)) {
             LOGGER.info("Service completed: ");
-            this.serviceStatus = "Completed";
+            this.serviceStatus = Status.COMPLETED;
         } else {
             LOGGER.warn("Service cannot be completed as it is not scheduled.");
         }
@@ -64,7 +73,7 @@ public class Service implements Chargeable {
     }
 
     public void setTotalCost(double totalCost) {
-        this.cost = new Cost(totalCost, "USD");
+        this.cost = new Cost(totalCost, CurrencyType.USD);
     }
 
 
@@ -74,7 +83,7 @@ public class Service implements Chargeable {
                 "name='" + name + '\'' +
                 ", parts=" + parts +
                 ", cost=" + cost +
-                ", serviceStatus='" + serviceStatus + '\'' +
+                ", serviceStatus='" + serviceStatus.getStatusDescription() + '\'' +
                 '}';
     }
 }
