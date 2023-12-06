@@ -8,9 +8,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.function.Supplier;
 
 public class Appointment implements Scheduleable {
     private static final Logger LOGGER = LogManager.getLogger(Appointment.class);
+    private Supplier<Status> newAppointmentStatus = () -> Status.SCHEDULED;
     private LocalDate date;
     private LocalTime time;
     private Status status;
@@ -18,7 +20,7 @@ public class Appointment implements Scheduleable {
     public Appointment(LocalDate date, LocalTime time) {
         this.date = date;
         this.time = time;
-        this.status = Status.SCHEDULED;
+        this.status = newAppointmentStatus.get();;
         LOGGER.info("Appointment scheduled for: " + date + " " + time);
     }
 

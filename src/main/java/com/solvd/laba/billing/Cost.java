@@ -119,6 +119,7 @@ public class Cost implements Chargeable {
     @Override
     public double totalCharge() {
         return getTotalCost();
+//        return () -> getTotalCost() * TAX_RATE;
     }
 
     @Override

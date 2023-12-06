@@ -1,8 +1,7 @@
-package com.solvd.laba.serviceManagement;
+package com.solvd.laba.storage;
 
 import com.solvd.laba.enums.PartCondition;
 import com.solvd.laba.interfaces.Repairable;
-import com.solvd.laba.interfaces.InventoryManageable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -61,6 +60,10 @@ public class Part implements Repairable {
         this.condition = condition;
     }
 
+//    Predicate<Inventory> hasPart = (inventory) -> inventory.getPart(name) != null;
+
+
+
     @Override
     public void repair() {
         if (isDamaged()) {
@@ -104,8 +107,9 @@ public class Part implements Repairable {
         this.quantity += amount;
     }
 
-    public void substractQuantity(int amount) {
+    public void subtractQuantity(int amount) {
         this.quantity -= amount;
     }
+
 
 }

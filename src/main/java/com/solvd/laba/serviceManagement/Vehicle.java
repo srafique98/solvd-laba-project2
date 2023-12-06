@@ -1,15 +1,14 @@
 package com.solvd.laba.serviceManagement;
 
-import com.solvd.laba.CarService;
 import com.solvd.laba.enums.VehicleCondition;
 import com.solvd.laba.interfaces.Repairable;
 import com.solvd.laba.people.Customer;
 import com.solvd.laba.people.Person;
+import com.solvd.laba.storage.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Vehicle implements Repairable {
@@ -109,6 +108,7 @@ public class Vehicle implements Repairable {
         }
         return false;
     }
+
 
     @Override
     public String toString() {

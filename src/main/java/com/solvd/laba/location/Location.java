@@ -1,6 +1,6 @@
 package com.solvd.laba.location;
 
-import com.solvd.laba.Inventory;
+import com.solvd.laba.storage.Inventory;
 import com.solvd.laba.enums.Country;
 import com.solvd.laba.exceptions.InvalidRatingException;
 import com.solvd.laba.interfaces.InventoryManageable;

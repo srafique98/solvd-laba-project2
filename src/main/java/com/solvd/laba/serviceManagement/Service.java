@@ -4,11 +4,13 @@ import com.solvd.laba.enums.CurrencyType;
 import com.solvd.laba.enums.Status;
 import com.solvd.laba.interfaces.Chargeable;
 import com.solvd.laba.billing.Cost;
+import com.solvd.laba.storage.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 
 public class Service implements Chargeable {
@@ -64,18 +66,17 @@ public class Service implements Chargeable {
     public double totalCharge() {
         return cost.totalCharge();
     }
-
     @Override
     public void applyDiscount(double discountPercentage) {
-        double discountAmount = this.totalCharge() * discountPercentage;
-        LOGGER.info("Applying discount on service: " + (this.totalCharge() - discountAmount));
-        this.setTotalCost(this.totalCharge() - discountAmount);
+        double currentTotalCharge = this.totalCharge();
+        double discountedTotalCharge = applyDiscountFunction.apply(discountPercentage).apply(currentTotalCharge);
+        LOGGER.info("Applying discount on service: " + discountedTotalCharge);
+        this.setTotalCost(discountedTotalCharge);
     }
 
     public void setTotalCost(double totalCost) {
         this.cost = new Cost(totalCost, CurrencyType.USD);
     }
-
 
     @Override
     public String toString() {
@@ -86,4 +87,10 @@ public class Service implements Chargeable {
                 ", serviceStatus='" + serviceStatus.getStatusDescription() + '\'' +
                 '}';
     }
+
+    public Function<Double, Function<Double, Double>> applyDiscountFunction =
+            discountPercentage -> totalCharge -> {
+                double discountAmount = totalCharge * discountPercentage;
+                return totalCharge - discountAmount;
+            };
 }

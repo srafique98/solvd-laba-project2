@@ -1,20 +1,24 @@
 package com.solvd.laba;
 
+import com.solvd.laba.location.Location;
 import com.solvd.laba.people.Customer;
 import com.solvd.laba.people.Employee;
 import com.solvd.laba.people.Person;
 import com.solvd.laba.serviceManagement.Appointment;
 import com.solvd.laba.serviceManagement.Service;
+import com.solvd.laba.storage.Inventory;
+import com.solvd.laba.storage.Part;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class CarServiceUtils {
-
+    private static final Logger LOGGER = LogManager.getLogger(Location.class);
     public static void writeCustomerToFile(Customer customer) {
         customer.writeToFile();
     }
@@ -24,33 +28,33 @@ public class CarServiceUtils {
     }
 
     public static void printPersonDetails(Person person) {
-        System.out.println(person.getInfo());
+        LOGGER.info(person.getInfo());
     }
 
     public static void printCustomerAppointments(Customer customer) {
-        System.out.println("Customer Appointments:");
+        LOGGER.info("Customer Appointments:");
         if (customer.getAppointments().isEmpty()) {
-            System.out.println("No appointments scheduled.");
+            LOGGER.warn("No appointments scheduled.");
         } else {
             for (Appointment appointment : customer.getAppointments()) {
-                System.out.println(appointment);
+                LOGGER.info(appointment);
             }
         }
     }
     public static void printAllCustomers(CarService carService) {
         for (Customer customer : carService.getCustomers()) {
-            System.out.println(customer.toString());
+            LOGGER.info(customer.toString());
         }
     }
 
     public static void printEmployeeRatings(Employee employee) {
-        System.out.println("Employee Ratings:");
-        System.out.println(employee.getFullName() + ": " + employee.getRating());
+        LOGGER.info("Employee Ratings:");
+        LOGGER.info(employee.getFullName() + ": " + employee.getRating());
     }
 
     public static void printServiceDetails(Service service) {
-        System.out.println("Service Details:");
-        System.out.println(service);
+        LOGGER.info("Service Details:");
+        LOGGER.info(service);
     }
 
     public static void registerCustomer(CarService carService) {
@@ -78,10 +82,14 @@ public class CarServiceUtils {
         carService.getCustomers().add(newCustomer);
         System.out.println("Customer registered successfully!");
     }
+
     private static boolean isValidEmail(String email) {
-        int atIndex = email.indexOf('@');
-        int dotIndex = email.lastIndexOf('.');
-        return atIndex > 0 && dotIndex > atIndex && dotIndex + 1 < email.length();
+        Predicate<String> isValidEmail = e -> {
+            int atIndex = e.indexOf('@');
+            int dotIndex = e.lastIndexOf('.');
+            return atIndex > 0 && dotIndex > atIndex && dotIndex + 1 < e.length();
+        };
+        return isValidEmail.test(email);
     }
     private static boolean isValidPhoneNumber(String phoneNumber) {
         return phoneNumber.length() == 10 && phoneNumber.chars().allMatch(Character::isDigit);
