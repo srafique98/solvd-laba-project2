@@ -96,11 +96,9 @@ public class Inventory implements InventoryManageable {
     }
 
     public int getTotalCount() {
-        int totalQuantity = 0;
-        for (Part part : parts.values()) {
-            totalQuantity += part.getQuantity();
-        }
-        return totalQuantity;
+        return parts.values().stream()
+                .mapToInt(Part::getQuantity)
+                .sum();
     }
 
     @Override
@@ -121,14 +119,15 @@ public class Inventory implements InventoryManageable {
     }
 
     public void printLowStockPartsWithInventoryCheck(int threshold) {
-        List<Part> lowStockParts = getLowStockParts(threshold);
-        for (Part part : lowStockParts) {
-            if (hasPart.check(this, part.getName())) {
-                LOGGER.info("Low stock part: " + part.getName() + " (" + part.getQuantity() + " remaining)");
-            } else {
-                LOGGER.warn("Unexpected error: Part not found in inventory: " + part.getName());
-            }
-        }
+        getLowStockParts(threshold)
+                .stream()
+                .forEach(part -> {
+                    if (hasPart.check(this, part.getName())) {
+                        LOGGER.info("Low stock part: " + part.getName() + " (" + part.getQuantity() + " remaining)");
+                    } else {
+                        LOGGER.warn("Unexpected error: Part not found in inventory: " + part.getName());
+                    }
+                });
     }
 
     public List<Part> getLowStockParts(int threshold) {

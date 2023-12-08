@@ -90,9 +90,7 @@ public class Vehicle implements Repairable {
     public void repair() {
         if (isDamaged()) {
             LOGGER.info("Repairing the following damaged parts:");
-            for (Part damagedPart : damagedParts) {
-                damagedPart.repair();
-            }
+            damagedParts.forEach(Part::repair);
             damagedParts.clear();
             this.condition = VehicleCondition.GOOD;
             LOGGER.info("Vehicle repair completed.");

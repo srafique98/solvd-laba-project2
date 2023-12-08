@@ -1,5 +1,7 @@
 package com.solvd.laba.enums;
 
+import java.util.Arrays;
+
 public enum Country {
     USA(1, "United States of America", CurrencyType.USD),
     ITALY(2, "Italy", CurrencyType.EUR);
@@ -27,20 +29,16 @@ public enum Country {
     }
 
     public static Country getCountryById(int countryId) {
-        for (Country country : Country.values()) {
-            if (country.getCountryId() == countryId) {
-                return country;
-            }
-        }
-        return null;
+        return Arrays.stream(Country.values())
+                .filter(country -> country.getCountryId() == countryId)
+                .findFirst()
+                .orElse(null);
     }
 
     public static Country getCountryByName(String countryName) {
-        for (Country country : Country.values()) {
-            if (country.getCountryName().equalsIgnoreCase(countryName)) {
-                return country;
-            }
-        }
-        return null;
+        return Arrays.stream(Country.values())
+                .filter(country -> country.getCountryName().equalsIgnoreCase(countryName))
+                .findFirst()
+                .orElse(null);
     }
 }

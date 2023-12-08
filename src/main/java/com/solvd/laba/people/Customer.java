@@ -103,15 +103,16 @@ public class Customer extends Person implements Scheduleable {
         return true;
     }
     public boolean hasAppointmentConflict(LocalDate userDate, LocalTime userTime) {
-        for (Appointment appointment : appointments) {
-            if (appointment.getDate().equals(userDate) && appointment.getTime().equals(userTime)) {
-                LOGGER.warn("Appointment Conflict: " + userDate + userTime);
-                return true;
-            }
+        boolean hasConflict = appointments.stream()
+                .anyMatch(appointment -> appointment.getDate().equals(userDate) && appointment.getTime().equals(userTime));
+        if (hasConflict) {
+            LOGGER.warn("Appointment Conflict: " + userDate + " " + userTime);
+        } else {
+            LOGGER.info("No conflict: " + userDate + " " + userTime);
         }
-        LOGGER.info("No conflict: " + userDate + userTime);
-        return false;
+        return hasConflict;
     }
+
     @Override
     public void cancelAppointment() {
         try {
@@ -153,9 +154,13 @@ public class Customer extends Person implements Scheduleable {
                     "Phone Number: " + getPhoneNumbers()
             );
 
-            for (String line : lines) {
-                writer.write(line + "\n");
-            }
+            lines.forEach(line -> {
+                try {
+                    writer.write(line + "\n");
+                } catch (IOException e) {
+                    LOGGER.error("Error writing to the file: " + e.getMessage());
+                }
+            });
             writer.write("\n");
             LOGGER.info("Customer information written to the file successfully.");
         } catch (IOException e) {

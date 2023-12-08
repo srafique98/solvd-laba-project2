@@ -104,32 +104,13 @@ public class GenericLinkedList<T> implements List { // <T> -- defines generic cl
     @Override
     public boolean addAll(Collection c) {
         int previousSize = size;
-        for (Object obj : c) {
-            add(obj);
-        }
+        c.stream().forEach(this::add);
         return size != previousSize;
     }
 
     @Override
     public boolean addAll(int index, Collection c) {
-        if (index < 0 || index > size) {
-            throw new InvalidIndexException("Invalid index: " + index);
-        }
-        int previousSize = size;
-        int i = 0;
-        Node<T> current = head;
-        while (i < index) {
-            current = current.next;
-            i++;
-        }
-        for (Object obj : c) {
-            Node<T> newNode = new Node<>((T) obj);
-            newNode.next = current.next;
-            current.next = newNode;
-            size++;
-            current = current.next;
-        }
-        return size != previousSize;
+        return false;
     }
 
     @Override
@@ -318,12 +299,7 @@ public class GenericLinkedList<T> implements List { // <T> -- defines generic cl
         if (c == null) {
             throw new NullPointerException("Cannot containsAll with null collection");
         }
-        for (Object o : c) {
-            if (!contains(o)) {
-                return false;
-            }
-        }
-        return true;
+        return c.stream().allMatch(this::contains);
     }
 
     @Override

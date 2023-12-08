@@ -16,6 +16,7 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.*;
 
 public class CarServiceUtils {
     private static final Logger LOGGER = LogManager.getLogger(Location.class);
@@ -41,9 +42,7 @@ public class CarServiceUtils {
         }
     }
     public static void printAllCustomers(CarService carService) {
-        for (Customer customer : carService.getCustomers()) {
-            LOGGER.info(customer.toString());
-        }
+        carService.getCustomers().forEach(customer -> LOGGER.info(customer.toString()));
     }
 
     public static void printEmployeeRatings(Employee employee) {
@@ -95,10 +94,9 @@ public class CarServiceUtils {
     }
 
     public static void makeAppointment(List<Customer> customers, CarService carService, Inventory inventory) {
-        for (int i = 0; i < customers.size(); i++) {
-            Customer customer = customers.get(i);
-            System.out.println((i + 1) + ". " + customer.getFullName());
-        }
+        IntStream.range(0, customers.size())
+                .forEach(i -> System.out.println((i + 1) + ". " + customers.get(i).getFullName()));
+
         System.out.println((customers.size()+1) + ". New user");
         int customerChoice = getUserChoice(customers.size()+1);
         if (customerChoice == customers.size()+1 ) {
@@ -115,10 +113,9 @@ public class CarServiceUtils {
         inventory.removeDamagedParts();
         LOGGER.info("Removed all damaged parts from inventory");
         System.out.println("Available Services:");
-        for (int i = 0; i < carService.getServices().size(); i++) {
-            Service service = carService.getServices().get(i);
-            System.out.println((i + 1) + ". " + service.getName());
-        }
+        IntStream.range(0, carService.getServices().size())
+                .forEach(i -> System.out.println((i + 1) + ". " + carService.getServices().get(i).getName()));
+
         int serviceChoice = getUserChoice(carService.getServices().size());
         Service selectedService = carService.getServices().get(serviceChoice - 1);
         switch (selectedService.getName()) {
@@ -133,7 +130,6 @@ public class CarServiceUtils {
                 if (!inventory.hasPart.check(inventory, "Oil Filter")) {
                     inventory.checkAmount("Oil Filter");
                     System.out.println("Insufficient stock of Oil Filters. Please try a different service.");
-
                     return;
                 }
                 break;
@@ -149,17 +145,15 @@ public class CarServiceUtils {
 
         System.out.println("Available Appointment Dates:");
         List<LocalDate> availableDates = getAvailableDates();
-        for (int i = 0; i < availableDates.size(); i++) {
-            System.out.println((i + 1) + ". " + availableDates.get(i));
-        }
+        IntStream.range(0, availableDates.size())
+                .forEach(i -> System.out.println((i + 1) + ". " + availableDates.get(i)));
         int dateChoice = getUserChoice(availableDates.size());
         LocalDate selectedDate = availableDates.get(dateChoice - 1);
 
         System.out.println("Available Appointment Times:");
         List<LocalTime> availableTimes = getAvailableTimes();
-        for (int i = 0; i < availableTimes.size(); i++) {
-            System.out.println((i + 1) + ". " + availableTimes.get(i));
-        }
+        IntStream.range(0, availableTimes.size())
+                .forEach(i -> System.out.println((i + 1) + ". " + availableTimes.get(i)));
 
         int timeChoice = getUserChoice(availableTimes.size());
         LocalTime selectedTime = availableTimes.get(timeChoice - 1);
