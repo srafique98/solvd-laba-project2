@@ -1,5 +1,7 @@
 package com.solvd.laba.enums;
 
+import java.util.Arrays;
+
 public enum VehicleCondition {
     EXCELLENT(0, "Excellent condition"),
     GOOD(1, "Vehicle is in good condition with some scratches"),
@@ -23,12 +25,10 @@ public enum VehicleCondition {
     }
 
     public static VehicleCondition getVehicleConditionByConditionId(int conditionId) {
-        for (VehicleCondition condition : VehicleCondition.values()) {
-            if (condition.getConditionId() == conditionId) {
-                return condition;
-            }
-        }
-        return null;
+        return Arrays.stream(VehicleCondition.values())
+                .filter(condition -> condition.getConditionId() == conditionId)
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean isRepairRequired() {

@@ -4,7 +4,6 @@ import com.solvd.laba.billing.Cost;
 import com.solvd.laba.enums.Country;
 import com.solvd.laba.enums.CurrencyType;
 import com.solvd.laba.enums.Status;
-import com.solvd.laba.interfaces.InventoryChecker;
 import com.solvd.laba.location.Location;
 import com.solvd.laba.people.Customer;
 import com.solvd.laba.people.Employee;
@@ -19,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
@@ -48,6 +48,11 @@ public class Main {
         appointments.add(appointment2);
 
         LinkedList<Service> services = new LinkedList<>();
+        Inventory inventory = new Inventory();
+        inventory.addPart("Brake Pads", 50.00, 10);
+        inventory.addPart("Oil Filter", 10.00, 20);
+        inventory.addPart("Tires", 100.00, 4);
+
         Part part1 = new Part("Brake Pads", 50.00);
         Part part2 = new Part("Brake Rotors", 100.00);
         List<Part> parts = new ArrayList<>();
@@ -113,7 +118,7 @@ public class Main {
         carService.setEmployees(employees);
         LOGGER.info(carService);
 
-        services.add(new Service("Tire Rotation"));
+        services.add(new Service("Tire Change"));
         locations.add(new Location("City", Country.USA, "Branch 1"));
         Customer fakeCustomer = new Customer("shan", "yoo", Set.of("123456789"));
         Employee fakeEmployee = new Employee("davis", "himmet", locations.get(0), "Mechanic", 50000.0);
@@ -123,9 +128,16 @@ public class Main {
 
         CarServiceUtils.printPersonDetails(fakeCustomer);
         CarServiceUtils.printPersonDetails(fakeEmployee);
-        CarServiceUtils.registerCustomer(carService);
+        CarServiceUtils.makeAppointment(carService.getCustomers(), carService, inventory);
 
-        CarServiceUtils.makeAppointment(carService.getCustomers().get(carService.getCustomers().size()-1), carService);
+        inventory.getAllParts().keySet().stream()
+                .filter(partName -> inventory.getPartQuantity(partName) == 0)
+                .map(partName -> {
+                    System.out.println("Removing part " + partName + " due to 0 quantity.");
+                    return partName;
+                })
+                .collect(Collectors.toList())
+                .forEach(inventory::removePart);
 //        Customer readCustomer = CarServiceUtils.readCustomerFromFile();
     }
 

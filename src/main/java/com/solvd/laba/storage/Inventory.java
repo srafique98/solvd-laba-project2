@@ -9,7 +9,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Inventory implements InventoryManageable {
@@ -104,22 +103,6 @@ public class Inventory implements InventoryManageable {
         return totalQuantity;
     }
 
-    public void updateInventory(String partName, int quantity) {
-        if (!parts.containsKey(partName)) {
-            return;
-        }
-        Part part = parts.get(partName);
-        part.setQuantity(quantity);
-    }
-
-    public void removeFromInventory(String partName) {
-        if (!parts.containsKey(partName)) {
-            return;
-        }
-        parts.remove(partName);
-    }
-
-
     @Override
     public void addQuantity(String partName, int amount) {
         if (!parts.containsKey(partName)) {
@@ -154,7 +137,7 @@ public class Inventory implements InventoryManageable {
                 .collect(Collectors.toList());
     }
 
-    InventoryChecker<String> hasPart = (inventory, partName) -> inventory.parts.containsKey(partName);
+    public InventoryChecker<String> hasPart = (inventory, partName) -> inventory.parts.containsKey(partName);
     PartConditionFilter<Part> damagedPartsFilter = part -> part.getCondition() == PartCondition.DAMAGED;
     InventoryOperation<Part> addQuantityOperation = (part, quantity) -> part.addQuantity(quantity);
     InventoryOperation<Part> subtractQuantityOperation = (part, quantity) -> part.subtractQuantity(quantity);

@@ -36,9 +36,8 @@ public class CarServiceUtils {
         if (customer.getAppointments().isEmpty()) {
             LOGGER.warn("No appointments scheduled.");
         } else {
-            for (Appointment appointment : customer.getAppointments()) {
-                LOGGER.info(appointment);
-            }
+            customer.getAppointments().stream()
+                    .forEach(appointment -> LOGGER.info(appointment));
         }
     }
     public static void printAllCustomers(CarService carService) {
@@ -95,8 +94,26 @@ public class CarServiceUtils {
         return phoneNumber.length() == 10 && phoneNumber.chars().allMatch(Character::isDigit);
     }
 
-    public static void makeAppointment(Customer customer, CarService carService) {
+    public static void makeAppointment(List<Customer> customers, CarService carService, Inventory inventory) {
+        for (int i = 0; i < customers.size(); i++) {
+            Customer customer = customers.get(i);
+            System.out.println((i + 1) + ". " + customer.getFullName());
+        }
+        System.out.println((customers.size()+1) + ". New user");
+        int customerChoice = getUserChoice(customers.size()+1);
+        if (customerChoice == customers.size()+1 ) {
+            registerCustomer(carService);
+        }
+        Customer selectedCustomer = customers.get(customerChoice - 1);
+
         Scanner scanner = new Scanner(System.in);
+        inventory.printLowStockPartsWithInventoryCheck(3);
+        if (inventory.getTotalCount() == 0){
+            LOGGER.error("No parts in inventory");
+            return;
+        }
+        inventory.removeDamagedParts();
+        LOGGER.info("Removed all damaged parts from inventory");
         System.out.println("Available Services:");
         for (int i = 0; i < carService.getServices().size(); i++) {
             Service service = carService.getServices().get(i);
@@ -104,6 +121,31 @@ public class CarServiceUtils {
         }
         int serviceChoice = getUserChoice(carService.getServices().size());
         Service selectedService = carService.getServices().get(serviceChoice - 1);
+        switch (selectedService.getName()) {
+            case "Brake Repair":
+                if (!inventory.hasPart.check(inventory, "Brake Pads")) {
+                    inventory.checkAmount("Brake Pads");
+                    System.out.println("Insufficient stock of Brake Pads. Please try a different service.");
+                    return;
+                }
+                break;
+            case "Oil Change":
+                if (!inventory.hasPart.check(inventory, "Oil Filter")) {
+                    inventory.checkAmount("Oil Filter");
+                    System.out.println("Insufficient stock of Oil Filters. Please try a different service.");
+
+                    return;
+                }
+                break;
+            case "Tire Change":
+                if (!inventory.hasPart.check(inventory, "Tires")) {
+                    inventory.checkAmount("Tires");
+                    System.out.println("Insufficient stock of Oil Filters. Please try a different service.");
+                    return;
+                }
+                break;
+        }
+
 
         System.out.println("Available Appointment Dates:");
         List<LocalDate> availableDates = getAvailableDates();
@@ -124,6 +166,18 @@ public class CarServiceUtils {
         try {
 //            customer.scheduleAppointment(selectedDate, selectedTime, selectedService);
             System.out.println("Appointment scheduled successfully!");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        try {
+            // Schedule appointment
+            selectedCustomer.scheduleAppointment(selectedDate, selectedTime); //selectedService
+            System.out.println("Appointment scheduled successfully! Confirmation details:");
+            printCustomerAppointments(selectedCustomer);
+            System.out.println("Customer: " + selectedCustomer.getFullName());
+            System.out.println("Service: " + selectedService.getName());
+            System.out.println("Date: " + selectedDate);
+            System.out.println("Time: " + selectedTime);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

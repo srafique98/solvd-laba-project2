@@ -1,5 +1,8 @@
 package com.solvd.laba.enums;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum PartCondition {
     NEW(0, "New part"),
     USED(1, "Previsiouly used in a vehicle"),
@@ -22,12 +25,12 @@ public enum PartCondition {
     }
 
     public static PartCondition getVehicleConditionByConditionId(int conditionId) {
-        for (PartCondition condition : PartCondition.values()) {
-            if (condition.getConditionId() == conditionId) {
-                return condition;
-            }
-        }
-        return null;
+        Optional<PartCondition> matchingCondition =
+                Arrays.stream(PartCondition.values())
+                        .filter(condition -> condition.getConditionId() == conditionId)
+                        .findFirst();
+
+        return matchingCondition.orElse(null);
     }
 
     public boolean isCompatibleWithVehicle(VehicleCondition vehicleCondition) {
