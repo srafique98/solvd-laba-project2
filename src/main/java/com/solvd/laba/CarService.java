@@ -9,6 +9,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class CarService {
 
@@ -71,6 +76,35 @@ public class CarService {
                 ", services=" + services +
                 ", locations=" + locations +
                 '}';
+    }
+
+    // Consumer
+    public void printEmployees(Consumer<Employee> employeeConsumer) {
+        LOGGER.info("List of employees:");
+        employees.forEach(employeeConsumer);
+    }
+
+    // Supplier
+    public Employee createEmployee(Supplier<Employee> employeeSupplier) {
+        Employee newEmployee = employeeSupplier.get();
+        LOGGER.info("New employee created: " + newEmployee.getFullName());
+        return newEmployee;
+    }
+
+    // Predicate
+    public List<Employee> filterEmployees(Predicate<Employee> employeeFilter) {
+        LOGGER.info("List of Filtered Employees:");
+        return employees.stream()
+                .filter(employeeFilter)
+                .collect(Collectors.toList());
+    }
+
+    // Function
+    public void printCustomerFullNames(Function<Customer, String> fullNameMapper) {
+        LOGGER.info("List of Customer Full Names:");
+        customers.forEach(customer -> {
+            LOGGER.info(fullNameMapper.apply(customer));
+        });
     }
 
 }

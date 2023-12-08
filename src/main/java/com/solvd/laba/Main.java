@@ -16,6 +16,10 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.solvd.laba.enums.VehicleCondition.getVehicleConditionByConditionId;
@@ -113,6 +117,9 @@ public class Main {
         Employee employee2 = new Employee("Bob", "Williams", new Location("San Francisco", Country.USA, "456 Mission St."), "Technician", 40000.00);
         employees.add(employee2);
 
+        Supplier<Employee> createNewEmployee = () ->
+                new Employee("Sarah", "Toto", new Location("New City", Country.USA, "789 Main St."), "Manager", 60000.00);
+
         CarService carService = new CarService(services, locations);
         carService.setCustomers(customers);
         carService.setEmployees(employees);
@@ -125,6 +132,24 @@ public class Main {
 
         carService.getCustomers().add(fakeCustomer);
         carService.getEmployees().add(fakeEmployee);
+
+        Consumer<Employee> printEmployeeFullName = employee ->
+                LOGGER.info("Employee Full Name: " + employee.getFullName());
+        Employee newEmployee = carService.createEmployee(createNewEmployee);
+        LOGGER.info("New employee details: " + newEmployee);
+
+        // Using Predicate
+        Predicate<Employee> filterTechnicians = employee ->
+                employee.getJobTittle().equalsIgnoreCase("Technician");
+
+        List<Employee> filteredTechnicians = carService.filterEmployees(filterTechnicians);
+        LOGGER.info("Filtered Technicians: " + filteredTechnicians);
+
+        // Using Function
+        Function<Customer, String> getCustomerFullName = customer ->
+                "Customer Full Name: " + customer.getFullName();
+
+        carService.printCustomerFullNames(getCustomerFullName);
 
         CarServiceUtils.printPersonDetails(fakeCustomer);
         CarServiceUtils.printPersonDetails(fakeEmployee);
