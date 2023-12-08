@@ -24,13 +24,10 @@ public enum PartCondition {
         return description;
     }
 
-    public static PartCondition getVehicleConditionByConditionId(int conditionId) {
-        Optional<PartCondition> matchingCondition =
-                Arrays.stream(PartCondition.values())
-                        .filter(condition -> condition.getConditionId() == conditionId)
-                        .findFirst();
-
-        return matchingCondition.orElse(null);
+    public Optional<PartCondition> getVehicleConditionByConditionId(int conditionId) {
+        return Arrays.stream(PartCondition.values())
+                .filter(condition -> condition.getConditionId() == conditionId)
+                .findFirst();
     }
 
     public boolean isCompatibleWithVehicle(VehicleCondition vehicleCondition) {

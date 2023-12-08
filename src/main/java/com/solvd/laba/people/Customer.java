@@ -130,17 +130,17 @@ public class Customer extends Person implements Scheduleable {
 
     }
 
-    public Vehicle getVehicleInformation(String registrationNumber) { //get --> expects to return something
+    public Optional<Vehicle> getVehicleInformation(String registrationNumber) {
         if (vehicles.containsKey(registrationNumber)) {
             Vehicle vehicle = vehicles.get(registrationNumber);
             LOGGER.info("Vehicle Information for Registration Number " + registrationNumber + ":");
             LOGGER.info("Make: " + vehicle.getMake());
             LOGGER.info("Model: " + vehicle.getModel());
             LOGGER.info("Year: " + vehicle.getModelYear());
-            return vehicle;
+            return Optional.of(vehicle);
         } else {
             LOGGER.warn("Vehicle with registration number " + registrationNumber + " not found.");
-            return null;
+            return Optional.empty();
         }
     }
 

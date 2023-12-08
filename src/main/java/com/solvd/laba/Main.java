@@ -1,9 +1,7 @@
 package com.solvd.laba;
 
 import com.solvd.laba.billing.Cost;
-import com.solvd.laba.enums.Country;
-import com.solvd.laba.enums.CurrencyType;
-import com.solvd.laba.enums.Status;
+import com.solvd.laba.enums.*;
 import com.solvd.laba.location.Location;
 import com.solvd.laba.people.Customer;
 import com.solvd.laba.people.Employee;
@@ -19,6 +17,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.solvd.laba.enums.VehicleCondition.getVehicleConditionByConditionId;
 
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
