@@ -68,16 +68,6 @@ public class CarService {
         this.locations = locations;
     }
 
-    @Override
-    public String toString() {
-        return "CarService{" +
-                "customers=" + customers +
-                ", employees=" + employees +
-                ", services=" + services +
-                ", locations=" + locations +
-                '}';
-    }
-
     // Consumer
     public void printEmployees(Consumer<Employee> employeeConsumer) {
         LOGGER.info("List of employees:");
@@ -105,6 +95,16 @@ public class CarService {
         customers.forEach(customer -> {
             LOGGER.info(fullNameMapper.apply(customer));
         });
+    }
+
+    @Override
+    public String toString() {
+        return "CarService{" +
+                "customers=" + customers +
+                ", employees=" + employees +
+                ", services=" + services +
+                ", locations=" + locations +
+                '}';
     }
 
 }
