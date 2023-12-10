@@ -68,34 +68,7 @@ public class CarService {
         this.locations = locations;
     }
 
-    // Consumer
-    public void printEmployees(Consumer<Employee> employeeConsumer) {
-        LOGGER.info("List of employees:");
-        employees.forEach(employeeConsumer);
-    }
 
-    // Supplier
-    public Employee createEmployee(Supplier<Employee> employeeSupplier) {
-        Employee newEmployee = employeeSupplier.get();
-        LOGGER.info("New employee created: " + newEmployee.getFullName());
-        return newEmployee;
-    }
-
-    // Predicate
-    public List<Employee> filterEmployees(Predicate<Employee> employeeFilter) {
-        LOGGER.info("List of Filtered Employees:");
-        return employees.stream()
-                .filter(employeeFilter)
-                .collect(Collectors.toList());
-    }
-
-    // Function
-    public void printCustomerFullNames(Function<Customer, String> fullNameMapper) {
-        LOGGER.info("List of Customer Full Names:");
-        customers.forEach(customer -> {
-            LOGGER.info(fullNameMapper.apply(customer));
-        });
-    }
 
     @Override
     public String toString() {
